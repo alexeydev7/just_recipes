@@ -27,6 +27,7 @@ class SearchRecipesViewModel @Inject constructor(
             .distinctUntilChanged()
             .customFlatMapLatest { query ->
                 getRecipeCardDataUseCase(query.toString())
-            }.cachedIn(viewModelScope)
+            }
+            .cachedIn(viewModelScope)
 
 }

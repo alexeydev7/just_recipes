@@ -16,6 +16,7 @@ import com.alexit.justrecipes.domain.model.database.IngredientModelFull
 import com.alexit.justrecipes.domain.model.database.IngredientModelShort
 import com.alexit.justrecipes.domain.model.database.RecipeCardModel
 import com.alexit.justrecipes.domain.model.database.RecipeDataModel
+import com.alexit.justrecipes.domain.model.database.RecipeIdNameModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -34,8 +35,8 @@ interface RecipesDao {
     @Query("SELECT DISTINCT category FROM ingredients ORDER BY category")
     suspend fun getCategories(): List<String>
 
-    @Query("SELECT EXISTS(SELECT 1 FROM ingredients WHERE name = :ingredientName)")
-    suspend fun checkExistIngredient(ingredientName: String): Boolean
+    //@Query("SELECT EXISTS(SELECT 1 FROM ingredients WHERE name = :ingredientName)")
+    //suspend fun checkExistIngredient(ingredientName: String): Boolean
 
     @Query("SELECT id, name FROM ingredients")
     suspend fun getIngredientIdName(): List<IngredientIdNameModel>
@@ -132,6 +133,14 @@ interface RecipesDao {
             "INNER JOIN ingredients ON ingredients.id = recipe_ingredients.ingredient_id " +
             "WHERE recipe_ingredients.recipe_id = :recipeId")
     suspend fun getIngredientsData(recipeId: Int): List<IngredientModelFull>
+
+    @Query("SELECT " +
+            "id, name " +
+            "FROM recipes " +
+            "WHERE (image = 'ai' OR image == 'own') " +
+            "AND name LIKE :query " +
+            "ORDER BY name")
+    fun getOwnRecipesIdName(query: String): Flow<List<RecipeIdNameModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOwnRecipe(recipe: RecipeEntity)

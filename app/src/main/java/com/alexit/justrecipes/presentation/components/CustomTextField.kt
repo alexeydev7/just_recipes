@@ -161,7 +161,6 @@ fun CustomTextField (
                         colorFilter = ColorFilter.tint(colorIcon)
                     )
                 } else {
-
                     Image(
                         modifier = Modifier
                             .size(sizeIcon)

@@ -12,6 +12,7 @@ import com.alexit.justrecipes.domain.model.database.IngredientModelFull
 import com.alexit.justrecipes.domain.model.database.IngredientModelShort
 import com.alexit.justrecipes.domain.model.database.RecipeCardModel
 import com.alexit.justrecipes.domain.model.database.RecipeDataModel
+import com.alexit.justrecipes.domain.model.database.RecipeIdNameModel
 import kotlinx.coroutines.flow.Flow
 
 interface RecipesRepository {
@@ -19,7 +20,7 @@ interface RecipesRepository {
     fun getIngredientsName(): Flow<SourceState<List<String>>>
     fun getInputtedIngredients(): Flow<SourceState<List<IngredientInputedModel>>>
     suspend fun getCategories(): List<String>
-    suspend fun checkExistIngredient(ingredientName: String): Boolean
+    //suspend fun checkExistIngredient(ingredientName: String): Boolean
     suspend fun getIngredientIdName(): List<IngredientIdNameModel>
     suspend fun addNewIngredient(ingredient: IngredientEntity)
     suspend fun addInputtedIngredient(ingredientId: Int, synonym: String)
@@ -35,5 +36,6 @@ interface RecipesRepository {
     suspend fun getIngredientsEnergy(recipeId: Int): List<IngredientModelEnergy>
     suspend fun getRecipeData(recipeId: Int): RecipeDataModel
     suspend fun getIngredientsData(recipeId: Int): List<IngredientModelFull>
+    fun getOwnRecipesIdName(query: String): Flow<SourceState<List<RecipeIdNameModel>>>
     suspend fun addNewRecipe(recipe: RecipeEntity, recipeIngredients: List<RecipeIngredientsEntity>)
 }

@@ -11,6 +11,7 @@ import com.alexit.justrecipes.domain.usecase.GetIngredientUseCase
 import com.alexit.justrecipes.domain.usecase.GetIngredientsNameUseCase
 import com.alexit.justrecipes.domain.usecase.GetInputtedIngredientsUseCase
 import com.alexit.justrecipes.domain.usecase.GetMAXIdIngredientsUseCase
+import com.alexit.justrecipes.domain.usecase.GetOwnRecipesIdNameUseCase
 import com.alexit.justrecipes.domain.usecase.GetRecipeAiUseCase
 import com.alexit.justrecipes.domain.usecase.GetRecipeCardDataUseCase
 import com.alexit.justrecipes.domain.usecase.GetRecipeFullDataUseCase
@@ -101,5 +102,11 @@ object UseCaseModule {
     @Singleton
     fun provideAddAiRecipeUseCase(recipesRepository: RecipesRepository): AddAiRecipeUseCase {
         return AddAiRecipeUseCase(recipesRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetOwnRecipesIdNameUseCase(recipesRepository: RecipesRepository): GetOwnRecipesIdNameUseCase {
+        return GetOwnRecipesIdNameUseCase(recipesRepository)
     }
 }

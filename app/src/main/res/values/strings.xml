@@ -28,6 +28,7 @@
     <string name="delete_inputted_ingredient">Удалить Ингредиент</string>
     <string name="clear_text">Clear Text</string>
     <string name="delete_ingredient">Удалить ингредиент</string>
+    <string name="add_recipe">Добавить</string>
     <string name="confirmation">Да</string>
     <string name="dismiss">Нет</string>
     <string name="add_unknown_ingredient">Добавить неизвестный ингредиент</string>

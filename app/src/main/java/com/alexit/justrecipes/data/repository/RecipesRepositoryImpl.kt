@@ -16,6 +16,7 @@ import com.alexit.justrecipes.domain.model.database.IngredientModelFull
 import com.alexit.justrecipes.domain.model.database.IngredientModelShort
 import com.alexit.justrecipes.domain.model.database.RecipeCardModel
 import com.alexit.justrecipes.domain.model.database.RecipeDataModel
+import com.alexit.justrecipes.domain.model.database.RecipeIdNameModel
 import com.alexit.justrecipes.domain.repository.RecipesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -42,9 +43,9 @@ class RecipesRepositoryImpl @Inject constructor(
         return recipesDao.getCategories()
     }
 
-    override suspend fun checkExistIngredient(ingredientName: String): Boolean {
-        return recipesDao.checkExistIngredient(ingredientName)
-    }
+    //override suspend fun checkExistIngredient(ingredientName: String): Boolean {
+    //    return recipesDao.checkExistIngredient(ingredientName)
+    //}
 
     override suspend fun getIngredientIdName(): List<IngredientIdNameModel> {
         return recipesDao.getIngredientIdName()
@@ -113,6 +114,11 @@ class RecipesRepositoryImpl @Inject constructor(
 
     override suspend fun getIngredientsData(recipeId: Int): List<IngredientModelFull> {
         return recipesDao.getIngredientsData(recipeId)
+    }
+
+    override fun getOwnRecipesIdName(query: String): Flow<SourceState<List<RecipeIdNameModel>>> {
+        val formattedQuery = "%$query%"
+        return recipesDao.getOwnRecipesIdName(formattedQuery).asSourceState()
     }
 
     override suspend fun addNewRecipe(
