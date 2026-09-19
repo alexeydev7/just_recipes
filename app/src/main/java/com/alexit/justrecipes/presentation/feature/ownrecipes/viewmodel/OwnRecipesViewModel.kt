@@ -23,8 +23,8 @@ class OwnRecipesViewModel @Inject constructor(
     private val getOwnRecipesIdNameUseCase: GetOwnRecipesIdNameUseCase
 ) : ViewModel() {
 
-    //private val _uiState = MutableStateFlow(OwnRecipesUiState())
-    //val uiState: StateFlow<OwnRecipesUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(OwnRecipesUiState())
+    val uiState: StateFlow<OwnRecipesUiState> = _uiState.asStateFlow()
     val inputTextState = TextFieldState()
 
 

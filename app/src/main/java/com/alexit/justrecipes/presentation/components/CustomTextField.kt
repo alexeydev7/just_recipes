@@ -127,40 +127,7 @@ fun CustomTextField (
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (state.text.isNotEmpty() || isFocused) {
-                    Image(
-                        modifier = Modifier
-                            .size(sizeIcon)
-                            .padding(start = contentPadding),
-                        imageVector = ImageVector.vectorResource(id = R.drawable.search_24px),
-                        contentDescription = stringResource(id = R.string.icon_search),
-                        colorFilter = ColorFilter.tint(colorIcon)
-                    )
-                    Box(
-                        modifier = Modifier
-                            .size(
-                                width = width - (sizeIcon * 2) - contentPadding,
-                                height = height
-                            )
-                            .padding(start = contentPadding),
-                        contentAlignment = Alignment.CenterStart
-                    )
-                    {
-                        innerTextField()
-                    }
-                    Image(
-                        modifier = Modifier
-                            .clickable(
-                                enabled = true,
-                                onClick = { state.clearText() }
-                            )
-                            .size(sizeIcon)
-                            .padding(start = contentPadding),
-                        imageVector = ImageVector.vectorResource(id = R.drawable.close_24px),
-                        contentDescription = stringResource(id = R.string.clear_text),
-                        colorFilter = ColorFilter.tint(colorIcon)
-                    )
-                } else {
+                if (state.text.isEmpty() && !isFocused) {
                     Image(
                         modifier = Modifier
                             .size(sizeIcon)
@@ -177,8 +144,41 @@ fun CustomTextField (
                             text = placeholder,
                             color = { unfocusedTextColor }
                         )
-                        innerTextField()
                     }
+                } else {
+                    Image(
+                        modifier = Modifier
+                            .size(sizeIcon)
+                            .padding(start = contentPadding),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.search_24px),
+                        contentDescription = stringResource(id = R.string.icon_search),
+                        colorFilter = ColorFilter.tint(colorIcon)
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .size(
+                            width = width - (sizeIcon * 2) - contentPadding,
+                            height = height
+                        )
+                        .padding(start = contentPadding),
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    innerTextField()
+                }
+                if (state.text.isNotEmpty()) {
+                    Image(
+                        modifier = Modifier
+                            .clickable(
+                                enabled = true,
+                                onClick = { state.clearText() }
+                            )
+                            .size(sizeIcon)
+                            .padding(start = contentPadding),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.close_24px),
+                        contentDescription = stringResource(id = R.string.clear_text),
+                        colorFilter = ColorFilter.tint(colorIcon)
+                    )
                 }
             }
         }

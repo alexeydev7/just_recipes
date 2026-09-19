@@ -35,7 +35,7 @@ fun OwnRecipesScreen(
     ownRecipesViewModel: OwnRecipesViewModel = hiltViewModel(),
     onAddRecipeClick: () -> Unit
 ) {
-    //val ownRecipesUiState by ownRecipesViewModel.uiState.collectAsStateWithLifecycle()
+    val ownRecipesUiState by ownRecipesViewModel.uiState.collectAsStateWithLifecycle()
     val ownRecipesIdNameState = ownRecipesViewModel.ownRecipesIdNameState.collectAsStateWithLifecycle()
 
     var isNewNotify by remember { mutableStateOf(false) }
@@ -66,7 +66,7 @@ fun OwnRecipesScreen(
             placeholder = stringResource(R.string.placeholder_search_recipes)
         )
 
-        //if (ownRecipesUiState.recipeId > 0){
+        if (ownRecipesUiState.recipeId == 0){
             when(val sourceState = ownRecipesIdNameState.value) {
                 is SourceState.Loading -> LoadingScreen()
                 is SourceState.Success -> ShowOwnRecipes(
@@ -82,7 +82,7 @@ fun OwnRecipesScreen(
                     notifyState = NotifyState.DANGER
                 }
             }
-        //}
+        }
     }
 }
 
