@@ -54,12 +54,21 @@ fun EntryProviderScope<NavKey>.featureRequestAi(
 }
 
 fun EntryProviderScope<NavKey>.featureOwnRecipes(
-    onSubRouteClick: () -> Unit,
+    onSubRouteClick1: () -> Unit,
+    onSubRouteClick2: (Int) -> Unit,
     onBackClick: () -> Unit
 ) {
     entry<OwnRecipesTab> {
         OwnRecipesScreen(
-            onAddRecipeClick = onSubRouteClick
+            onAddRecipeClick = onSubRouteClick1,
+            onRecipeClick = { id: Int -> onSubRouteClick2(id) }
+        )
+    }
+
+    entry< ShowOwnRecipe> { key ->
+        ShowRecipeScreen(
+            recipeId = key.recipeId,
+            onBackClick = onBackClick
         )
     }
 

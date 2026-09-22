@@ -15,6 +15,9 @@ data object SearchRecipesTab : NavKey
 data class ShowRecipe(val recipeId: Int) : NavKey
 
 @Serializable
+data class ShowOwnRecipe(val recipeId: Int) : NavKey
+
+@Serializable
 data object RequestAiTab : NavKey
 
 @Serializable

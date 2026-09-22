@@ -50,7 +50,8 @@ import kotlinx.collections.immutable.toPersistentList
 @Composable
 fun OwnRecipesScreen(
     ownRecipesViewModel: OwnRecipesViewModel = hiltViewModel(),
-    onAddRecipeClick: () -> Unit
+    onAddRecipeClick: () -> Unit,
+    onRecipeClick: (Int) -> Unit
 ) {
     val ownRecipesUiState by ownRecipesViewModel.uiState.collectAsStateWithLifecycle()
     val ownRecipesIdNameState = ownRecipesViewModel.ownRecipesIdNameState.collectAsStateWithLifecycle()
@@ -69,6 +70,7 @@ fun OwnRecipesScreen(
         )
     }
 
+    //if (ownRecipesUiState.showingRecipeId > 0) ShowRecipeScreen(ownRecipesUiState.showingRecipeId)
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -100,11 +102,7 @@ fun OwnRecipesScreen(
                             OwnRecipesIntent.IsRemoveOwnRecipe(recipe)
                         )
                     },
-                    onViewRecipe = { recipe: RecipeIdNameModel ->
-                        ownRecipesViewModel.handleIntent(
-                            OwnRecipesIntent.ViewRecipe(recipe)
-                        )
-                    },
+                    onViewRecipe = onRecipeClick,
                     onEditClick = { recipe: RecipeIdNameModel ->
                         ownRecipesViewModel.handleIntent(
                             OwnRecipesIntent.EditRecipe(recipe)
@@ -146,7 +144,7 @@ private fun LoadingScreen() {
 private fun ShowOwnRecipes(
     listOwnRecipes: PersistentList<RecipeIdNameModel>,
     onDeleteClick: (RecipeIdNameModel) -> Unit,
-    onViewRecipe: (RecipeIdNameModel) -> Unit,
+    onViewRecipe: (Int) -> Unit,
     onEditClick: (RecipeIdNameModel) -> Unit
 ) {
     val iconDeleteRecipe = R.drawable.round_do_not_disturb_on_24
@@ -205,7 +203,7 @@ private fun ShowOwnRecipes(
                             .padding(start = contentPadding)
                             .clickable(
                                 enabled = true,
-                                onClick = { onViewRecipe(recipe) }
+                                onClick = { onViewRecipe(recipe.id) }
                             )
                             .weight(1f),
                             //.width(widthRecipeNameText),

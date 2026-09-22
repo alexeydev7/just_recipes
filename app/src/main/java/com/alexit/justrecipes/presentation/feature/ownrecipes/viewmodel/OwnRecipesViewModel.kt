@@ -7,10 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.alexit.justrecipes.common.SourceState
 import com.alexit.justrecipes.common.customDebounce
 import com.alexit.justrecipes.common.customFlatMapLatest
-import com.alexit.justrecipes.domain.model.database.IngredientInputedModel
 import com.alexit.justrecipes.domain.model.database.RecipeIdNameModel
 import com.alexit.justrecipes.domain.usecase.GetOwnRecipesIdNameUseCase
-import com.alexit.justrecipes.presentation.feature.inputingrediets.viewmodel.InputIngredientsIntent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -66,5 +64,10 @@ class OwnRecipesViewModel @Inject constructor(
     }
 
     private fun viewRecipe(recipe: RecipeIdNameModel) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                showingRecipeId = recipe.id
+            )
+        }
     }
 }

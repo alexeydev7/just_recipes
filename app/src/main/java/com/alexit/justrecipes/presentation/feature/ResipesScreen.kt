@@ -20,6 +20,7 @@ import com.alexit.justrecipes.presentation.navigation.MakeOwnRecipe
 import com.alexit.justrecipes.presentation.navigation.RecipesBottomMenu
 import com.alexit.justrecipes.presentation.navigation.RecipesNavigationState
 import com.alexit.justrecipes.presentation.navigation.RecipesNavigator
+import com.alexit.justrecipes.presentation.navigation.ShowOwnRecipe
 import com.alexit.justrecipes.presentation.navigation.ShowRecipe
 import com.alexit.justrecipes.presentation.navigation.featureInputIngredients
 import com.alexit.justrecipes.presentation.navigation.featureOwnRecipes
@@ -46,7 +47,8 @@ fun RecipesScreen(
             onBackClick = { navigator.navigationBack() }
         )
         featureOwnRecipes(
-            onSubRouteClick = { navigator.navigateTo(MakeOwnRecipe) },
+            onSubRouteClick1 = { navigator.navigateTo(MakeOwnRecipe) },
+            onSubRouteClick2 = { id -> navigator.navigateTo(ShowOwnRecipe(recipeId = id)) },
             onBackClick = { navigator.navigationBack() }
         )
     }
