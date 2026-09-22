@@ -49,7 +49,7 @@ fun RecipeCardItem (
     val widthRecipeCard = JustRecipesTheme.dimensions.widthRecipeCard
     val heightRecipeCard = JustRecipesTheme.dimensions.heightRecipeCard
     val backgroundRecipeCard = JustRecipesTheme.colors.background2
-    val roundedCorner = JustRecipesTheme.dimensions.radiusCornerField
+    val radiusShape = JustRecipesTheme.dimensions.radiusCornerField
     val borderColor = JustRecipesTheme.colors.border2
     val borderThickness = JustRecipesTheme.dimensions.borderThickness
     val widthNameRecipeCard = JustRecipesTheme.dimensions.widthNameRecipeCard
@@ -84,7 +84,7 @@ fun RecipeCardItem (
             .background(
                 color = backgroundRecipeCard,
                 shape = RoundedCornerShape(
-                    size = roundedCorner
+                    size = radiusShape
                 )
             )
             .border(
@@ -93,8 +93,13 @@ fun RecipeCardItem (
                     color = borderColor
                 ),
                 shape = RoundedCornerShape(
-                    size = roundedCorner,
+                    size = radiusShape,
                 )
+            )
+            .clip(RoundedCornerShape(radiusShape))
+            .clickable(
+                enabled = true,
+                onClick = { onRecipeClick(recipe.id) }
             ),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
@@ -109,11 +114,7 @@ fun RecipeCardItem (
             BasicText(
                 modifier = Modifier
                     .padding(start = padding)
-                    .width(widthNameRecipeCard)
-                    .clickable(
-                        enabled = true,
-                        onClick = { onRecipeClick(recipe.id) }
-                    ),
+                    .width(widthNameRecipeCard),
                 style = textNameStyle,
                 color = { colorText },
                 text = recipe.name
@@ -126,7 +127,7 @@ fun RecipeCardItem (
                         .size(sizeImage)
                         .clip(
                             shape = RoundedCornerShape(
-                                size = roundedCorner
+                                size = radiusShape
                             )
                         ),
                     imageVector = ImageVector.vectorResource(imageAi),
@@ -141,7 +142,7 @@ fun RecipeCardItem (
                         .size(sizeImage)
                         .clip(
                             shape = RoundedCornerShape(
-                                size = roundedCorner
+                                size = radiusShape
                             )
                         ),
                     imageVector = ImageVector.vectorResource(imageOwn),
@@ -157,7 +158,7 @@ fun RecipeCardItem (
                         .size(sizeImage)
                         .clip(
                             shape = RoundedCornerShape(
-                                size = roundedCorner
+                                size = radiusShape
                             )
                         ),
                     bitmap = bitmap,

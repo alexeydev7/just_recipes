@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -179,6 +180,7 @@ private fun ShowOwnRecipes(
                 Image(
                     modifier = Modifier
                         .size(sizeIcon)
+                        .clip(RoundedCornerShape(radiusShape))
                         .clickable(
                             enabled = true,
                             onClick = { onDeleteClick(recipe) }
@@ -194,6 +196,11 @@ private fun ShowOwnRecipes(
                         .background(
                             color = colorInputtedIngredientsField,
                             shape = RoundedCornerShape(radiusShape)
+                        )
+                        .clip(RoundedCornerShape(radiusShape))
+                        .clickable(
+                            enabled = true,
+                            onClick = { onViewRecipe(recipe.id) }
                         ),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
@@ -201,12 +208,7 @@ private fun ShowOwnRecipes(
                     BasicText(
                         modifier = Modifier
                             .padding(start = contentPadding)
-                            .clickable(
-                                enabled = true,
-                                onClick = { onViewRecipe(recipe.id) }
-                            )
                             .weight(1f),
-                            //.width(widthRecipeNameText),
                         style = textStyleRecipeName,
                         color = { colorRecipeNameText },
                         text = recipe.name
