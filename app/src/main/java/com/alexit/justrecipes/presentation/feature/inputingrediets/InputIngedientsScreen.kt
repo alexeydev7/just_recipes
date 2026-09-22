@@ -41,6 +41,8 @@ fun InputIngredientsScreen(
     val ingredientsNameState = inputIngredientsViewModel.ingredientsNameState.collectAsStateWithLifecycle()
     val inputtedIngredientsState = inputIngredientsViewModel.inputtedIngredientsState.collectAsStateWithLifecycle()
 
+    val paddingFieldInput = JustRecipesTheme.dimensions.paddingFieldInput
+
     var isNewNotify by remember { mutableStateOf(false) }
     var notifyMessage by remember { mutableStateOf("") }
     var notifyState by remember { mutableStateOf(NotifyState.INFO) }
@@ -75,7 +77,7 @@ fun InputIngredientsScreen(
 
         Column(
             modifier = Modifier
-                .padding(vertical = JustRecipesTheme.dimensions.paddingFieldInput)
+                .padding(vertical = paddingFieldInput)
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

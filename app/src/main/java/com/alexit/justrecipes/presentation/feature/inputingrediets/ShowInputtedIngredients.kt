@@ -54,10 +54,10 @@ import kotlinx.collections.immutable.PersistentList
 fun ShowInputtedIngredients(
     inputtedIngredients: PersistentList<IngredientInputedModel>,
     onDeleteClick: (IngredientInputedModel) -> Unit,
-    onWeightClick: (Int, Int, String) -> Unit,
+    onWeightClick: (Int, Int, String) -> Unit
 ) {
     val iconDeleteIngredient = R.drawable.round_do_not_disturb_on_24
-    val descriptionIconDeleteIngredient = R.string.delete_inputted_ingredient
+    val descriptionIconDeleteIngredient = R.string.delete_item
     val colorIconDeleteIngredient = JustRecipesTheme.colors.iconDeleteIngredient
     val colorInputtedIngredientsField = JustRecipesTheme.colors.background4
     val colorInputtedIngredientText = JustRecipesTheme.colors.text4
@@ -70,8 +70,8 @@ fun ShowInputtedIngredients(
     val contentPadding = JustRecipesTheme.dimensions.contentPaddingField
     val width = JustRecipesTheme.dimensions.widthInputTextField
     val bottomMenuHeight = JustRecipesTheme.dimensions.heightBottomMenu
-    val widthInputtedIngredientField = JustRecipesTheme.dimensions.widthInputtedIngredientField
-    val widthInputtedIngredientText = JustRecipesTheme.dimensions.widthInputtedIngredientText
+    val widthInputtedIngredientField = JustRecipesTheme.dimensions.widthShowedTextField
+    val widthInputtedIngredientText = JustRecipesTheme.dimensions.widthShowedText
     val widthInputtedIngredientWeight = JustRecipesTheme.dimensions.widthInputtedIngredientWeight
     val heightInputtedIngredientWeight = JustRecipesTheme.dimensions.heightInputtedIngredientWeight
     val sizeIcon = JustRecipesTheme.dimensions.sizeIcon1
@@ -198,17 +198,16 @@ fun ShowInputtedIngredients(
                                             width = widthInputtedIngredientWeight,
                                             height = heightInputtedIngredientWeight
                                         ),
-                                    contentAlignment = Alignment.Center
+                                    contentAlignment = Alignment.CenterEnd
                                 ) {
-                                    innerTextField()
+                                    Image(
+                                        modifier = Modifier
+                                            .size(sizeIconScale),
+                                        imageVector = ImageVector.vectorResource(iconScale),
+                                        contentDescription = stringResource(descriptionIconScale),
+                                        colorFilter = ColorFilter.tint(colorWeightIngredient)
+                                    )
                                 }
-                                Image(
-                                    modifier = Modifier
-                                        .size(sizeIconScale),
-                                    imageVector = ImageVector.vectorResource(iconScale),
-                                    contentDescription = stringResource(descriptionIconScale),
-                                    colorFilter = ColorFilter.tint(colorWeightIngredient)
-                                )
                             }
                         }
                     }

@@ -7,8 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.alexit.justrecipes.common.SourceState
 import com.alexit.justrecipes.common.customDebounce
 import com.alexit.justrecipes.common.customFlatMapLatest
+import com.alexit.justrecipes.domain.model.database.IngredientInputedModel
 import com.alexit.justrecipes.domain.model.database.RecipeIdNameModel
 import com.alexit.justrecipes.domain.usecase.GetOwnRecipesIdNameUseCase
+import com.alexit.justrecipes.presentation.feature.inputingrediets.viewmodel.InputIngredientsIntent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -16,6 +18,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,5 +43,28 @@ class OwnRecipesViewModel @Inject constructor(
                 started = SharingStarted.WhileSubscribed(5000L),
                 initialValue = SourceState.Loading
             )
+    }
+
+    fun handleIntent(intent: OwnRecipesIntent) {
+        when (intent) {
+            is OwnRecipesIntent.IsRemoveOwnRecipe -> isRemoveRecipe(intent.recipe)
+            is OwnRecipesIntent.EditRecipe -> editRecipe(intent.recipe)
+            is OwnRecipesIntent.ViewRecipe -> viewRecipe(intent.recipe)
+        }
+    }
+
+    private fun isRemoveRecipe(recipe: RecipeIdNameModel) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                isDeleteRecipe = true,
+                deletingRecipe = recipe
+            )
+        }
+    }
+
+    private fun editRecipe(recipe: RecipeIdNameModel) {
+    }
+
+    private fun viewRecipe(recipe: RecipeIdNameModel) {
     }
 }

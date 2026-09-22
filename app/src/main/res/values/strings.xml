@@ -25,7 +25,8 @@
     <string name="title_make_own_recipes">Создание Своего Рецепта</string>
     <string name="placeholder_input_ingredients">Добавить Ингредиент</string>
     <string name="placeholder_search_recipes">Искать Рецепт</string>
-    <string name="delete_inputted_ingredient">Удалить Ингредиент</string>
+    <string name="delete_item">Удалить</string>
+    <string name="edit_item">Редактировать</string>
     <string name="clear_text">Clear Text</string>
     <string name="delete_ingredient">Удалить ингредиент</string>
     <string name="add_recipe">Добавить</string>
