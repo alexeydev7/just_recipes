@@ -156,4 +156,16 @@ interface RecipesDao {
         insertOwnRecipe(recipe)
         insertRecipeIngredients(recipeIngredients)
     }
+
+    @Transaction
+    suspend fun deleteOwnRecipe(recipeId: Int) {
+        deleteRecipeIngredients(recipeId)
+        deleteRecipe(recipeId)
+    }
+
+    @Query("DELETE FROM recipe_ingredients WHERE recipe_id = :recipeId")
+    suspend fun deleteRecipeIngredients(recipeId: Int)
+
+    @Query("DELETE FROM recipes WHERE id = :recipeId")
+    suspend fun deleteRecipe(recipeId: Int)
 }

@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -169,12 +170,11 @@ fun CustomTextField (
                 if (state.text.isNotEmpty()) {
                     Image(
                         modifier = Modifier
+                            .clip(RoundedCornerShape(sizeIcon))
                             .clickable(
                                 enabled = true,
                                 onClick = { state.clearText() }
-                            )
-                            .size(sizeIcon)
-                            .padding(start = contentPadding),
+                            ),
                         imageVector = ImageVector.vectorResource(id = R.drawable.close_24px),
                         contentDescription = stringResource(id = R.string.clear_text),
                         colorFilter = ColorFilter.tint(colorIcon)

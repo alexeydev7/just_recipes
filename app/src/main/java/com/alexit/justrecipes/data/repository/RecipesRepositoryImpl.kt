@@ -127,4 +127,8 @@ class RecipesRepositoryImpl @Inject constructor(
     ) {
         recipesDao.addNewRecipe(recipe, recipeIngredients)
     }
+
+    override suspend fun deleteOwnRecipe(recipeId: Int) {
+        recipesDao.deleteOwnRecipe(recipeId)
+    }
 }

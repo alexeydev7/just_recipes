@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -39,14 +41,17 @@ import com.alexit.justrecipes.common.NotifyState
 import com.alexit.justrecipes.common.SourceState
 import com.alexit.justrecipes.domain.model.database.RecipeIdNameModel
 import com.alexit.justrecipes.presentation.components.CircleLoader
+import com.alexit.justrecipes.presentation.components.CustomDialog
 import com.alexit.justrecipes.presentation.components.CustomPopup
 import com.alexit.justrecipes.presentation.components.CustomTextField
+import com.alexit.justrecipes.presentation.components.NotifySideEffect
 import com.alexit.justrecipes.presentation.components.TitlePanel
 import com.alexit.justrecipes.presentation.feature.ownrecipes.viewmodel.OwnRecipesIntent
 import com.alexit.justrecipes.presentation.feature.ownrecipes.viewmodel.OwnRecipesViewModel
 import com.alexit.justrecipes.presentation.theme.JustRecipesTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun OwnRecipesScreen(
@@ -62,6 +67,19 @@ fun OwnRecipesScreen(
     var isNewNotify by remember { mutableStateOf(false) }
     var notifyMessage by remember { mutableStateOf("") }
     var notifyState by remember { mutableStateOf(NotifyState.INFO) }
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        ownRecipesViewModel.sideEffect.collectLatest { notify ->
+            when (notify) {
+                is NotifySideEffect.ShowNotify -> {
+                    isNewNotify = true
+                    notifyMessage = "${notify.message.asString(context)}\n${notify.addition}".trimEnd()
+                    notifyState = notify.state
+                }
+            }
+        }
+    }
 
     if (isNewNotify) {
         CustomPopup(
@@ -71,7 +89,6 @@ fun OwnRecipesScreen(
         )
     }
 
-    //if (ownRecipesUiState.showingRecipeId > 0) ShowRecipeScreen(ownRecipesUiState.showingRecipeId)
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -94,13 +111,23 @@ fun OwnRecipesScreen(
                 placeholder = stringResource(R.string.placeholder_search_recipes)
             )
 
+            if (ownRecipesUiState.deletingRecipe.id > 0) {
+                CustomDialog(
+                    onDismissRequest = { ownRecipesViewModel.handleIntent(
+                        OwnRecipesIntent.DismissDeleteOwnRecipe) },
+                    onConfirmation = { ownRecipesViewModel.handleIntent(
+                        OwnRecipesIntent.DeleteOwnRecipe) },
+                    textDialog = stringResource(R.string.delete_recipe),
+                    item = ownRecipesUiState.deletingRecipe.name,
+                )
+            }
             when (val sourceState = ownRecipesIdNameState.value) {
                 is SourceState.Loading -> LoadingScreen()
-                is SourceState.Success -> ShowOwnRecipes(
+                is SourceState.Success -> ShowListOwnRecipes(
                     listOwnRecipes = sourceState.data.toPersistentList(),
                     onDeleteClick = { recipe: RecipeIdNameModel ->
                         ownRecipesViewModel.handleIntent(
-                            OwnRecipesIntent.IsRemoveOwnRecipe(recipe)
+                            OwnRecipesIntent.IsDeleteOwnRecipe(recipe)
                         )
                     },
                     onViewRecipe = onRecipeClick,
@@ -110,7 +137,6 @@ fun OwnRecipesScreen(
                         )
                     }
                 )
-
                 is SourceState.Error -> {
                     isNewNotify = true
                     notifyMessage = if (sourceState.message != null) {
@@ -142,7 +168,7 @@ private fun LoadingScreen() {
 }
 
 @Composable
-private fun ShowOwnRecipes(
+private fun ShowListOwnRecipes(
     listOwnRecipes: PersistentList<RecipeIdNameModel>,
     onDeleteClick: (RecipeIdNameModel) -> Unit,
     onViewRecipe: (Int) -> Unit,
@@ -180,7 +206,7 @@ private fun ShowOwnRecipes(
                 Image(
                     modifier = Modifier
                         .size(sizeIcon)
-                        .clip(RoundedCornerShape(radiusShape))
+                        .clip(RoundedCornerShape(sizeIcon))
                         .clickable(
                             enabled = true,
                             onClick = { onDeleteClick(recipe) }
@@ -217,6 +243,7 @@ private fun ShowOwnRecipes(
                         modifier = Modifier
                             .padding(end = contentPadding)
                             .size(sizeIcon)
+                            .clip(RoundedCornerShape(sizeIcon))
                             .clickable(
                                 enabled = true,
                                 onClick = { onEditClick(recipe) }

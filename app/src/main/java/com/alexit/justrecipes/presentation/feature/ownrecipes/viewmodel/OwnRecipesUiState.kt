@@ -4,6 +4,5 @@ import com.alexit.justrecipes.domain.model.database.RecipeIdNameModel
 
 data class OwnRecipesUiState(
     val showingRecipeId: Int = -1,
-    val isDeleteRecipe: Boolean = false,
     val deletingRecipe: RecipeIdNameModel = RecipeIdNameModel(-1, ""),
 )

@@ -6,6 +6,7 @@ import com.alexit.justrecipes.domain.repository.RecipesRepository
 import com.alexit.justrecipes.domain.usecase.AddInputtedIngredientUseCase
 import com.alexit.justrecipes.domain.usecase.AddAiRecipeUseCase
 import com.alexit.justrecipes.domain.usecase.ChangeWeightIngredientUseCase
+import com.alexit.justrecipes.domain.usecase.DeleteOwnRecipeUseCase
 import com.alexit.justrecipes.domain.usecase.GetCategoriesUseCase
 import com.alexit.justrecipes.domain.usecase.GetIngredientUseCase
 import com.alexit.justrecipes.domain.usecase.GetIngredientsNameUseCase
@@ -108,5 +109,11 @@ object UseCaseModule {
     @Singleton
     fun provideGetOwnRecipesIdNameUseCase(recipesRepository: RecipesRepository): GetOwnRecipesIdNameUseCase {
         return GetOwnRecipesIdNameUseCase(recipesRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDeleteOwnRecipeUseCase(recipesRepository: RecipesRepository): DeleteOwnRecipeUseCase {
+        return DeleteOwnRecipeUseCase(recipesRepository)
     }
 }

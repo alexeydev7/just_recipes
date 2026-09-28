@@ -53,17 +53,17 @@ class InputIngredientsViewModel @Inject constructor(
 
     val inputtedIngredientsState: StateFlow<SourceState<List<IngredientInputedModel>>> by lazy {
         getInputtedIngredientsUseCase().stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000L),
-            SourceState.Loading
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = SourceState.Loading
         )
     }
 
     val ingredientsNameState: StateFlow<SourceState<List<String>>> by lazy {
         getIngredientsNameUseCase().stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000L),
-            SourceState.Loading
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = SourceState.Loading
         )
     }
 
@@ -220,7 +220,7 @@ class InputIngredientsViewModel @Inject constructor(
                 removeInputtedIngredientUseCase(uiState.value.deletingIngredientId)
                 _sideEffect.send(
                     NotifySideEffect.ShowNotify(
-                        message = StringResourceHolder.StringResource(R.string.remove_ingredient),
+                        message = StringResourceHolder.StringResource(R.string.removed_ingredient),
                         addition = uiState.value.deletingIngredientName,
                         state = NotifyState.INFO
                     )
@@ -235,7 +235,7 @@ class InputIngredientsViewModel @Inject constructor(
             } catch (_: Exception) {
                 _sideEffect.send(
                     NotifySideEffect.ShowNotify(
-                        message = StringResourceHolder.StringResource(R.string.hardware_error_remove_ing),
+                        message = StringResourceHolder.StringResource(R.string.hardware_error_remove_ingredient),
                         addition = uiState.value.newIngredientName,
                         state = NotifyState.DANGER
                     )

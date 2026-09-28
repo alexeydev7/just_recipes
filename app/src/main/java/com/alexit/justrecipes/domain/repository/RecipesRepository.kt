@@ -38,4 +38,5 @@ interface RecipesRepository {
     suspend fun getIngredientsData(recipeId: Int): List<IngredientModelFull>
     fun getOwnRecipesIdName(query: String): Flow<SourceState<List<RecipeIdNameModel>>>
     suspend fun addNewRecipe(recipe: RecipeEntity, recipeIngredients: List<RecipeIngredientsEntity>)
+    suspend fun deleteOwnRecipe(recipeId: Int)
 }

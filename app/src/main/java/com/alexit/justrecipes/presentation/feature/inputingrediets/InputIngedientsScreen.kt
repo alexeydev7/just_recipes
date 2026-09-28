@@ -154,7 +154,7 @@ fun InputIngredientsScreen(
                         InputIngredientsIntent.DismissRemoveIngredient) },
                     onConfirmation = { inputIngredientsViewModel.handleIntent(
                         InputIngredientsIntent.RemoveInputtedIngredient) },
-                    textDialog = stringResource(R.string.delete_ingredient),
+                    textDialog = stringResource(R.string.remove_ingredient),
                     item = inputIngredientsUiState.deletingIngredientName,
                 )
             }

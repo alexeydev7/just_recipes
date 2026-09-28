@@ -28,7 +28,10 @@
     <string name="delete_item">Удалить</string>
     <string name="edit_item">Редактировать</string>
     <string name="clear_text">Clear Text</string>
-    <string name="delete_ingredient">Удалить ингредиент</string>
+    <string name="remove_ingredient">Удалить ингредиент</string>
+    <string name="removed_ingredient">Удален ингредиент</string>
+    <string name="delete_recipe">Удалить рецепт</string>
+    <string name="deleted_recipe">Удален рецепт</string>
     <string name="add_recipe">Добавить</string>
     <string name="confirmation">Да</string>
     <string name="dismiss">Нет</string>
@@ -49,8 +52,8 @@
     <string name="added_new_recipe">Добавлен новый рецепт</string>
     <string name="hardware_error_add_new_ing">Аппаратная ошибка.\nНе удалось добавить новый ингредиент</string>
     <string name="hardware_error_add_new_recipe">Аппаратная ошибка.\nНе удалось добавить новый рецепт</string>
-    <string name="remove_ingredient">Удален ингредиент</string>
-    <string name="hardware_error_remove_ing">Аппаратная ошибка.\nНе удалось удалить ингредиент</string>
+    <string name="hardware_error_remove_ingredient">Аппаратная ошибка.\nНе удалось удалить ингредиент</string>
+    <string name="hardware_error_delete_recipe">Аппаратная ошибка.\nНе удалось удалить рецепт</string>
     <string name="change_weight_ingredient">Изменено количество ингредиента</string>
     <string name="hardware_error_change_weight_ing">Аппаратная ошибка.\nНе удалось изменить вес ингредиента</string>
     <string name="hardware_error_get_recipe">Аппаратная ошибка.\nНе удалось получить рецепт</string>

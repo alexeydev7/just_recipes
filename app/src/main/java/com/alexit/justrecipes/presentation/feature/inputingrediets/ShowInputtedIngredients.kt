@@ -109,7 +109,7 @@ fun ShowInputtedIngredients(
                 Image(
                     modifier = Modifier
                         .size(sizeIcon)
-                        .clip(RoundedCornerShape(radiusShape))
+                        .clip(RoundedCornerShape(sizeIcon))
                         .clickable(
                             enabled = true,
                             onClick = {
