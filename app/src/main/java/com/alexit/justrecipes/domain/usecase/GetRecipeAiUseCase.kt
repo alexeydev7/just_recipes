@@ -11,7 +11,7 @@ import com.alexit.justrecipes.domain.remote.KtorApiService
 import io.ktor.client.statement.HttpResponse
 import javax.inject.Inject
 
-const val MODEL_GPT = "deepseek-v4-flash"
+const val MODEL_GPT = "deepseek-flash"
 const val REASONING_EFFORT = "high"
 
 class GetRecipeAiUseCase @Inject constructor(

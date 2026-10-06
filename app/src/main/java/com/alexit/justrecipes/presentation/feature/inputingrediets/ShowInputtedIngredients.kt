@@ -162,11 +162,13 @@ fun ShowInputtedIngredients(
                     decorator = { innerTextField ->
                         Row(
                             modifier = Modifier,
-                            verticalAlignment = Alignment.CenterVertically
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             BasicText(
                                 modifier = Modifier
-                                    .width(widthInputtedIngredientText),
+                                    .weight(1f),
+                                    //.width(widthInputtedIngredientText),
                                 style = textStyleInputtedIngredient,
                                 color = { colorInputtedIngredientText },
                                 text = ingredient.name

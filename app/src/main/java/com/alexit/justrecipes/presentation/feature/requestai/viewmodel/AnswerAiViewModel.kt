@@ -54,7 +54,7 @@ class AnswerAiViewModel @Inject constructor(
                         else -> {
                             _sideEffect.send(
                                 NotifySideEffect.ShowNotify(
-                                    message = StringResourceHolder.StringResource(R.string.ai_not_avialable),
+                                    message = StringResourceHolder.StringResource(R.string.ai_not_available),
                                     addition = recipeAiAnswer.status.value.toString(),
                                     state = NotifyState.WARNING
                                 )
@@ -64,7 +64,7 @@ class AnswerAiViewModel @Inject constructor(
                 } catch (err: Throwable) {
                     _sideEffect.send(
                         NotifySideEffect.ShowNotify(
-                            message = StringResourceHolder.StringResource(R.string.ai_not_avialable),
+                            message = StringResourceHolder.StringResource(R.string.ai_not_available),
                             addition = err.message.toString(),
                             state = NotifyState.WARNING
                         )

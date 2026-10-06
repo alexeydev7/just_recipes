@@ -32,7 +32,8 @@ data class CustomTypography(
     val text6: TextStyle,
     val text7: TextStyle,
     val text8: TextStyle,
-    val text9: TextStyle
+    val text9: TextStyle,
+    val text10: TextStyle
 )
 val themeTypography = CustomTypography(
     text1 = TextStyle(
@@ -85,7 +86,12 @@ val themeTypography = CustomTypography(
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp
     ),
-
+    text10 = TextStyle(
+        fontFamily = NunitoFont,
+        fontWeight = FontWeight.ExtraBold,
+        fontSize = 24.sp,
+        textDecoration = TextDecoration.Underline
+    ),
 )
 
 val LocalCustomTypography = staticCompositionLocalOf {

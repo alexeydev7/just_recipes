@@ -30,25 +30,27 @@ fun TitlePanel(
     val padding = JustRecipesTheme.dimensions.paddingTextTitlePanel
     val styleTitleText = JustRecipesTheme.typography.text1
     val styleButtonText = JustRecipesTheme.typography.text9
-    val heighButton = JustRecipesTheme.dimensions.heighButtonTitlePanel
+    val heightButton = JustRecipesTheme.dimensions.heightButtonTitlePanel
 
     Box(
         modifier = Modifier
             .height(height)
             .background(background)
             .padding(padding)
-            .fillMaxSize()
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
+
     ) {
         if (textLeft != "") {
             BasicText(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(heighButton))
+                    .clip(RoundedCornerShape(heightButton))
                     .clickable(
                         enabled = true,
                         onClick = onLeftClick
                     )
                     .align(Alignment.BottomStart)
-                    .height(heighButton)
+                    .height(heightButton)
                     .background(colorTitleText)
                     .padding(
                         start = padding,
@@ -63,9 +65,9 @@ fun TitlePanel(
 
         BasicText(
             modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .height(heighButton)
-                .wrapContentHeight(align = Alignment.CenterVertically),
+                //.align(Alignment.Center)
+                .height(height)
+                .wrapContentHeight(align = Alignment.Bottom),
             text = text,
             style = styleTitleText.copy(textAlign = TextAlign.Center),
             color = { colorTitleText },
@@ -73,13 +75,13 @@ fun TitlePanel(
         if (textRight != "") {
             BasicText(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(heighButton))
+                    .clip(RoundedCornerShape(heightButton))
                     .clickable(
                         enabled = true,
                         onClick = onRightClick
                     )
                     .align(Alignment.BottomEnd)
-                    .height(heighButton)
+                    .height(heightButton)
                     .background(colorTitleText)
                     .padding(
                         start = padding,

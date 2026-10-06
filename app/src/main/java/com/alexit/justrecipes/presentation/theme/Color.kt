@@ -16,6 +16,7 @@ val green9 = Color(0xFFCBD8A9)
 val green10 = Color(0xFFB2C485)
 val green11 = Color(0xFF658454)
 val green12 = Color(0xFF70BB0E)
+val green13 = Color(0xFF6C8B46)
 val grey1 = Color(0x1A3E5134)
 val black1 = Color(0xFF323230)
 val black2 = Color(0xCCFFFFFF)
@@ -50,8 +51,10 @@ data class CustomColors(
     val text4: Color,
     val text5: Color,
     val text6: Color,
+    val text7: Color,
     val iconSearchIngredient: Color,
     val iconDeleteIngredient: Color,
+    val iconEdit: Color,
     val notifyBackgroundInfo: Color,
     val notifyBorderInfo: Color,
     val notifyTextInfo: Color,
@@ -87,8 +90,10 @@ val themeColors = CustomColors(
     text4 = brown4,
     text5 = brown5,
     text6 = green11,
+    text7 = brown2,
     iconSearchIngredient = brown2,
     iconDeleteIngredient = red1,
+    iconEdit = green13,
     notifyBackgroundInfo = green7,
     notifyBorderInfo = grey1,
     notifyTextInfo = brown6,

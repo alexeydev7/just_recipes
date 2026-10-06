@@ -1,26 +1,197 @@
 package com.alexit.justrecipes.presentation.feature.ownrecipes
 
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation
+import androidx.compose.foundation.text.input.KeyboardActionHandler
+import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.clearText
+import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alexit.justrecipes.R
+import com.alexit.justrecipes.presentation.components.TitlePanel
+import com.alexit.justrecipes.presentation.feature.ownrecipes.viewmodel.MakeOwnRecipeIntent
+import com.alexit.justrecipes.presentation.feature.ownrecipes.viewmodel.MakeOwnRecipeViewModel
 import com.alexit.justrecipes.presentation.theme.JustRecipesTheme
 
 @Composable
-fun MakeOwnRecipeScreen(onBackClick: () -> Unit) {
-    Box(modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
-    ) {
+fun MakeOwnRecipeScreen(
+    makeOwnRecipeViewModel: MakeOwnRecipeViewModel = hiltViewModel(),
+    onBackClick: () -> Unit
+) {
+    val makeOwnRecipeUiState by makeOwnRecipeViewModel.uiState.collectAsStateWithLifecycle()
+    val recipeName = if (makeOwnRecipeUiState.nameRecipe == "") stringResource(R.string.name_new_recipe)
+    else makeOwnRecipeUiState.nameRecipe
+    val contentPadding = JustRecipesTheme.dimensions.paddingFieldInput
 
-        BasicText(
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+    ) {
+        TitlePanel(
             text = stringResource(R.string.title_make_own_recipes),
-            style = JustRecipesTheme.typography.text1,
-            //color = JustRecipesTheme.colors.onTitlePanel
+            onLeftClick = onBackClick,
+            textLeft = stringResource(R.string.go_back),
+            onRightClick = { if (!makeOwnRecipeUiState.isSaved)
+                makeOwnRecipeViewModel.handleIntent(MakeOwnRecipeIntent.SaveOwnRecipe)
+                           },
+            textRight = if (!makeOwnRecipeUiState.isSaved) stringResource(R.string.save) else ""
         )
+        Column(
+            modifier = Modifier
+                .padding(contentPadding)
+                .fillMaxWidth(),
+        ) {
+            NameTextField(
+                state = makeOwnRecipeViewModel.inputNameRecipeState,
+                onDoneClick = {
+                    makeOwnRecipeViewModel.handleIntent(
+                        MakeOwnRecipeIntent.GetNameRecipe(it)
+                    )
+                },
+                iconPlaceholder = R.drawable.edit_3,
+                iconDescriptionPlaceholder = R.string.edit_item,
+                placeholder = recipeName
+            )
+        }
     }
+}
+
+@Composable
+fun NameTextField (
+    state: TextFieldState,
+    onDoneClick: ((String) -> Unit),
+    iconPlaceholder: Int,
+    iconDescriptionPlaceholder: Int,
+    placeholder: String,
+) {
+
+    val textStyle = JustRecipesTheme.typography.text10
+    val textColor = JustRecipesTheme.colors.text7
+    val sizeIcon = JustRecipesTheme.dimensions.sizeIcon2
+    val colorIcon = JustRecipesTheme.colors.iconEdit
+    val withTextName = JustRecipesTheme.dimensions.widthNameOwnRecipe
+
+
+    var isFocused by remember { mutableStateOf(false) }
+
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    BasicTextField(
+        state = state,
+        modifier = Modifier
+            .onFocusChanged { isFocused = it.isFocused },
+        enabled = true,
+        inputTransformation = InputTransformation {
+            if (asCharSequence().isNotEmpty() && !asCharSequence().first()
+                    .isLetter()
+            ) revertAllChanges()
+        },
+        textStyle = textStyle.copy(color = textColor),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Text,
+            capitalization = KeyboardCapitalization.Sentences,
+            imeAction = ImeAction.Done
+        ),
+        onKeyboardAction = KeyboardActionHandler {
+            if (state.text.isNotEmpty()) {
+                onDoneClick(state.text.toString().trim())
+                state.clearText()
+                keyboardController?.hide()
+            }
+        },
+        lineLimits = TextFieldLineLimits.MultiLine(),
+        cursorBrush = SolidColor(textColor),
+        decorator = { innerTextField ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(
+                    modifier = Modifier
+                        .width(withTextName),
+                ) {
+                    innerTextField()
+                }
+                if (state.text.isNotEmpty()) {
+                    Image(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(sizeIcon))
+                            .size(sizeIcon)
+                            .clickable(
+                                enabled = true,
+                                onClick = { state.clearText() }
+                            ),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.close_24px),
+                        contentDescription = stringResource(id = R.string.clear_text),
+                        colorFilter = ColorFilter.tint(textColor),
+                    )
+                }
+            }
+            if (state.text.isEmpty()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    BasicText(
+                        modifier = Modifier
+                            .width(withTextName),
+                        style = textStyle,
+                        text = placeholder,
+                        color = { textColor }
+                    )
+                    Image(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(sizeIcon))
+                            .size(sizeIcon)
+                            .clickable(
+                                enabled = true,
+                                onClick = { state.setTextAndPlaceCursorAtEnd(placeholder) }
+                            ),
+                        imageVector = ImageVector.vectorResource(id = iconPlaceholder),
+                        contentDescription = stringResource(id = iconDescriptionPlaceholder),
+                        colorFilter = ColorFilter.tint(colorIcon)
+                    )
+                }
+            }
+        }
+    )
 }

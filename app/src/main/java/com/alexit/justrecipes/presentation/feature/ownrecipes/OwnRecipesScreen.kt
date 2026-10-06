@@ -176,17 +176,18 @@ private fun ShowListOwnRecipes(
 ) {
     val iconDeleteRecipe = R.drawable.round_do_not_disturb_on_24
     val descriptionIconDeleteRecipe = R.string.delete_item
-    val iconEditRecipe = R.drawable.pencil_outline
+    val iconEditRecipe = R.drawable.edit_3
     val descriptionIconEditRecipe = R.string.edit_item
     val colorIconDeleteRecipe = JustRecipesTheme.colors.iconDeleteIngredient
-    val colorInputtedIngredientsField = JustRecipesTheme.colors.background4
+    val colorIconEditRecipe = JustRecipesTheme.colors.iconEdit
+    val colorRecipeNameField = JustRecipesTheme.colors.background4
     val colorRecipeNameText = JustRecipesTheme.colors.text4
     val textStyleRecipeName = JustRecipesTheme.typography.text1
     val contentPadding = JustRecipesTheme.dimensions.contentPaddingField
     val widthInputTextField = JustRecipesTheme.dimensions.widthInputTextField
     val bottomMenuHeight = JustRecipesTheme.dimensions.heightBottomMenu
     val widthRecipeNameField = JustRecipesTheme.dimensions.widthShowedTextField
-    val sizeIcon = JustRecipesTheme.dimensions.sizeIcon1
+    val sizeIcon = JustRecipesTheme.dimensions.sizeIcon2
     val radiusShape = JustRecipesTheme.dimensions.radiusCornerField
     LazyColumn(
         modifier = Modifier
@@ -220,7 +221,7 @@ private fun ShowListOwnRecipes(
                         .width(widthRecipeNameField)
                         .wrapContentHeight()
                         .background(
-                            color = colorInputtedIngredientsField,
+                            color = colorRecipeNameField,
                             shape = RoundedCornerShape(radiusShape)
                         )
                         .clip(RoundedCornerShape(radiusShape))
@@ -250,7 +251,7 @@ private fun ShowListOwnRecipes(
                             ),
                         imageVector = ImageVector.vectorResource(iconEditRecipe),
                         contentDescription = stringResource(descriptionIconEditRecipe),
-                        colorFilter = ColorFilter.tint(colorRecipeNameText)
+                        colorFilter = ColorFilter.tint(colorIconEditRecipe)
                     )
                 }
             }
