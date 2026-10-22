@@ -1,6 +1,6 @@
 package com.alexit.justrecipes.domain.model.database
 
-data class IngredientModelFull(
+data class IngredientFullModel(
     val id: Int,
     val name: String,
     val energy: Double,

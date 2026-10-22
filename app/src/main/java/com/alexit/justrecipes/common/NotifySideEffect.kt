@@ -1,7 +1,4 @@
-package com.alexit.justrecipes.presentation.components
-
-import com.alexit.justrecipes.common.NotifyState
-import com.alexit.justrecipes.common.StringResourceHolder
+package com.alexit.justrecipes.common
 
 sealed class NotifySideEffect {
     data class ShowNotify(

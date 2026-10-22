@@ -13,7 +13,7 @@ import com.alexit.justrecipes.common.customFlatMapLatest
 import com.alexit.justrecipes.domain.model.database.RecipeIdNameModel
 import com.alexit.justrecipes.domain.usecase.DeleteOwnRecipeUseCase
 import com.alexit.justrecipes.domain.usecase.GetOwnRecipesIdNameUseCase
-import com.alexit.justrecipes.presentation.components.NotifySideEffect
+import com.alexit.justrecipes.common.NotifySideEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow

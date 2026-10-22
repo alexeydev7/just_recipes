@@ -44,7 +44,7 @@ import com.alexit.justrecipes.presentation.components.CircleLoader
 import com.alexit.justrecipes.presentation.components.CustomDialog
 import com.alexit.justrecipes.presentation.components.CustomPopup
 import com.alexit.justrecipes.presentation.components.CustomTextField
-import com.alexit.justrecipes.presentation.components.NotifySideEffect
+import com.alexit.justrecipes.common.NotifySideEffect
 import com.alexit.justrecipes.presentation.components.TitlePanel
 import com.alexit.justrecipes.presentation.feature.ownrecipes.viewmodel.OwnRecipesIntent
 import com.alexit.justrecipes.presentation.feature.ownrecipes.viewmodel.OwnRecipesViewModel

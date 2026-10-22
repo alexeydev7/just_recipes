@@ -1,4 +1,4 @@
-package com.alexit.justrecipes.presentation.components
+package com.alexit.justrecipes.utility
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalDensity

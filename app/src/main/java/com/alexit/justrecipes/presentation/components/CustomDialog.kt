@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.window.Dialog
 import com.alexit.justrecipes.R
+import com.alexit.justrecipes.utility.dpToPx
 import com.alexit.justrecipes.presentation.theme.JustRecipesTheme
 
 @Composable

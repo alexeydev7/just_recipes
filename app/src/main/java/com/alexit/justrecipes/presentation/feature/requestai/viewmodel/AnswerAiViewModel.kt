@@ -9,7 +9,7 @@ import com.alexit.justrecipes.domain.model.ai.RecipeAi
 import com.alexit.justrecipes.domain.model.ai.ResponseAi
 import com.alexit.justrecipes.domain.usecase.AddAiRecipeUseCase
 import com.alexit.justrecipes.domain.usecase.GetRecipeAiUseCase
-import com.alexit.justrecipes.presentation.components.NotifySideEffect
+import com.alexit.justrecipes.common.NotifySideEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.ktor.client.call.body
 import kotlinx.coroutines.Dispatchers

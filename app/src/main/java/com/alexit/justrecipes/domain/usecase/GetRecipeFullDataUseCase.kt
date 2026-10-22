@@ -2,10 +2,10 @@ package com.alexit.justrecipes.domain.usecase
 
 import com.alexit.justrecipes.domain.model.database.HealthyFoodModel
 import com.alexit.justrecipes.domain.model.database.IngredientDataModel
-import com.alexit.justrecipes.domain.model.database.IngredientModelEnergy
-import com.alexit.justrecipes.domain.model.database.IngredientModelFull
+import com.alexit.justrecipes.domain.model.database.IngredientEnergyModel
+import com.alexit.justrecipes.domain.model.database.IngredientFullModel
 import com.alexit.justrecipes.domain.model.database.RecipeDataModel
-import com.alexit.justrecipes.domain.model.database.RecipeModelFull
+import com.alexit.justrecipes.domain.model.database.RecipeFullModel
 import com.alexit.justrecipes.domain.repository.RecipesRepository
 import com.alexit.justrecipes.utility.getHealthyFoodData
 import javax.inject.Inject
@@ -14,9 +14,9 @@ import kotlin.Int
 class GetRecipeFullDataUseCase @Inject constructor(
     private val recipesRepository: RecipesRepository
 ) {
-    suspend operator fun invoke(recipeId: Int): RecipeModelFull {
+    suspend operator fun invoke(recipeId: Int): RecipeFullModel {
         val recipeData: RecipeDataModel = recipesRepository.getRecipeData(recipeId)
-        val ingredientsFullData: List<IngredientModelFull> = recipesRepository.getIngredientsData(recipeId)
+        val ingredientsFullData: List<IngredientFullModel> = recipesRepository.getIngredientsData(recipeId)
         val healthyFoodData: HealthyFoodModel = if (ingredientsFullData.any { it.energy < 0 ||
                     it.protein < 0 ||
                     it.fat < 0 ||
@@ -25,7 +25,7 @@ class GetRecipeFullDataUseCase @Inject constructor(
             }) HealthyFoodModel(-1.0, -1.0, -1.0, -1.0)
         else {
             getHealthyFoodData(ingredientsFullData.map {
-                IngredientModelEnergy(
+                IngredientEnergyModel(
                     id = it.id,
                     energy = it.energy,
                     protein = it.protein,
@@ -36,7 +36,7 @@ class GetRecipeFullDataUseCase @Inject constructor(
                 )
             })
         }
-        val recipe = RecipeModelFull (
+        val recipe = RecipeFullModel (
             id = recipeData.id,
             name = recipeData.name,
             image = recipeData.image,

@@ -2,7 +2,7 @@ package com.alexit.justrecipes.domain.usecase
 
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.alexit.justrecipes.domain.model.database.IngredientModelEnergy
+import com.alexit.justrecipes.domain.model.database.IngredientEnergyModel
 import com.alexit.justrecipes.domain.model.database.RecipeCardModel
 import com.alexit.justrecipes.domain.repository.RecipesRepository
 import com.alexit.justrecipes.utility.getHealthyFoodData
@@ -37,7 +37,7 @@ class GetRecipeCardDataUseCase @Inject constructor(
     }
 }
 
-private fun isHealthy(ingredients: List<IngredientModelEnergy>, portion: Int?): Boolean {
+private fun isHealthy(ingredients: List<IngredientEnergyModel>, portion: Int?): Boolean {
     if (ingredients.any { it.energy < 0 ||
                 it.protein < 0 ||
                 it.fat < 0 ||

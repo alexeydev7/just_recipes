@@ -20,7 +20,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alexit.justrecipes.R
 import com.alexit.justrecipes.common.NotifyState
 import com.alexit.justrecipes.common.SourceState
-import com.alexit.justrecipes.domain.model.database.IngredientInputedModel
+import com.alexit.justrecipes.domain.model.database.IngredientInputtedModel
 import com.alexit.justrecipes.presentation.components.CircleLoader
 import com.alexit.justrecipes.presentation.components.CustomDialog
 import com.alexit.justrecipes.presentation.components.CustomPopup
@@ -28,7 +28,7 @@ import com.alexit.justrecipes.presentation.components.CustomTextField
 import com.alexit.justrecipes.presentation.components.TitlePanel
 import com.alexit.justrecipes.presentation.feature.inputingrediets.viewmodel.InputIngredientsIntent
 import com.alexit.justrecipes.presentation.feature.inputingrediets.viewmodel.InputIngredientsViewModel
-import com.alexit.justrecipes.presentation.components.NotifySideEffect
+import com.alexit.justrecipes.common.NotifySideEffect
 import com.alexit.justrecipes.presentation.theme.JustRecipesTheme
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.collectLatest
@@ -122,7 +122,7 @@ fun InputIngredientsScreen(
                     is SourceState.Loading -> LoadingScreen()
                     is SourceState.Success -> ShowInputtedIngredients(
                         inputtedIngredients = stateSource.data.toPersistentList(),
-                        onDeleteClick = { ingredient: IngredientInputedModel ->
+                        onDeleteClick = { ingredient: IngredientInputtedModel ->
                             inputIngredientsViewModel.handleIntent(
                                 InputIngredientsIntent.IsRemoveIngredient(ingredient)
                             )

@@ -6,21 +6,20 @@ import com.alexit.justrecipes.data.local.room.entity.IngredientEntity
 import com.alexit.justrecipes.data.local.room.entity.RecipeEntity
 import com.alexit.justrecipes.data.local.room.entity.RecipeIngredientsEntity
 import com.alexit.justrecipes.domain.model.database.IngredientIdNameModel
-import com.alexit.justrecipes.domain.model.database.IngredientInputedModel
-import com.alexit.justrecipes.domain.model.database.IngredientModelEnergy
-import com.alexit.justrecipes.domain.model.database.IngredientModelFull
-import com.alexit.justrecipes.domain.model.database.IngredientModelShort
+import com.alexit.justrecipes.domain.model.database.IngredientInputtedModel
+import com.alexit.justrecipes.domain.model.database.IngredientEnergyModel
+import com.alexit.justrecipes.domain.model.database.IngredientFullModel
+import com.alexit.justrecipes.domain.model.database.IngredientShortModel
 import com.alexit.justrecipes.domain.model.database.RecipeCardModel
 import com.alexit.justrecipes.domain.model.database.RecipeDataModel
 import com.alexit.justrecipes.domain.model.database.RecipeIdNameModel
 import kotlinx.coroutines.flow.Flow
 
 interface RecipesRepository {
-    suspend fun getIngredient(ingredientName: String): IngredientModelShort?
+    suspend fun getIngredient(ingredientName: String): IngredientShortModel?
     fun getIngredientsName(): Flow<SourceState<List<String>>>
-    fun getInputtedIngredients(): Flow<SourceState<List<IngredientInputedModel>>>
+    fun getInputtedIngredients(): Flow<SourceState<List<IngredientInputtedModel>>>
     suspend fun getCategories(): List<String>
-    //suspend fun checkExistIngredient(ingredientName: String): Boolean
     suspend fun getIngredientIdName(): List<IngredientIdNameModel>
     suspend fun addNewIngredient(ingredient: IngredientEntity)
     suspend fun addInputtedIngredient(ingredientId: Int, synonym: String)
@@ -33,9 +32,9 @@ interface RecipesRepository {
     suspend fun getMAXIdIngredients(): Int
     suspend fun getMAXIdRecipes(): Int
     fun getRecipesCardData(query: String): Flow<PagingData<RecipeCardModel>>
-    suspend fun getIngredientsEnergy(recipeId: Int): List<IngredientModelEnergy>
+    suspend fun getIngredientsEnergy(recipeId: Int): List<IngredientEnergyModel>
     suspend fun getRecipeData(recipeId: Int): RecipeDataModel
-    suspend fun getIngredientsData(recipeId: Int): List<IngredientModelFull>
+    suspend fun getIngredientsData(recipeId: Int): List<IngredientFullModel>
     fun getOwnRecipesIdName(query: String): Flow<SourceState<List<RecipeIdNameModel>>>
     suspend fun addNewRecipe(recipe: RecipeEntity, recipeIngredients: List<RecipeIngredientsEntity>)
     suspend fun deleteOwnRecipe(recipeId: Int)

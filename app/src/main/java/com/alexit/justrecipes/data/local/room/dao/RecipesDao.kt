@@ -10,10 +10,10 @@ import com.alexit.justrecipes.data.local.room.entity.IngredientEntity
 import com.alexit.justrecipes.data.local.room.entity.RecipeEntity
 import com.alexit.justrecipes.data.local.room.entity.RecipeIngredientsEntity
 import com.alexit.justrecipes.domain.model.database.IngredientIdNameModel
-import com.alexit.justrecipes.domain.model.database.IngredientInputedModel
-import com.alexit.justrecipes.domain.model.database.IngredientModelEnergy
-import com.alexit.justrecipes.domain.model.database.IngredientModelFull
-import com.alexit.justrecipes.domain.model.database.IngredientModelShort
+import com.alexit.justrecipes.domain.model.database.IngredientInputtedModel
+import com.alexit.justrecipes.domain.model.database.IngredientEnergyModel
+import com.alexit.justrecipes.domain.model.database.IngredientFullModel
+import com.alexit.justrecipes.domain.model.database.IngredientShortModel
 import com.alexit.justrecipes.domain.model.database.RecipeCardModel
 import com.alexit.justrecipes.domain.model.database.RecipeDataModel
 import com.alexit.justrecipes.domain.model.database.RecipeIdNameModel
@@ -23,20 +23,17 @@ import kotlinx.coroutines.flow.Flow
 interface RecipesDao {
     @Query("SELECT id, name, synonym, is_inputted AS isInputted " +
             "FROM ingredients WHERE name = :ingredientName")
-    suspend fun getIngredient(ingredientName: String): IngredientModelShort?
+    suspend fun getIngredient(ingredientName: String): IngredientShortModel?
 
     @Query("SELECT name FROM ingredients")
     fun getIngredientsName(): Flow<List<String>>
 
     @Query("SELECT id, name, category, weight FROM ingredients WHERE is_inputted = 1 " +
             "ORDER BY name")
-    fun getInputtedIngredients(): Flow<List<IngredientInputedModel>>
+    fun getInputtedIngredients(): Flow<List<IngredientInputtedModel>>
 
     @Query("SELECT DISTINCT category FROM ingredients ORDER BY category")
     suspend fun getCategories(): List<String>
-
-    //@Query("SELECT EXISTS(SELECT 1 FROM ingredients WHERE name = :ingredientName)")
-    //suspend fun checkExistIngredient(ingredientName: String): Boolean
 
     @Query("SELECT id, name FROM ingredients")
     suspend fun getIngredientIdName(): List<IngredientIdNameModel>
@@ -115,7 +112,7 @@ interface RecipesDao {
             "INNER JOIN recipes ON recipes.id = recipe_ingredients.recipe_id " +
             "INNER JOIN ingredients ON ingredients.id = recipe_ingredients.ingredient_id " +
             "WHERE recipe_ingredients.recipe_id = :recipeId")
-    suspend fun getIngredientsEnergy(recipeId: Int): List<IngredientModelEnergy>
+    suspend fun getIngredientsEnergy(recipeId: Int): List<IngredientEnergyModel>
 
     @Query("SELECT " +
             "id, name, image, duration, portion, details, details_img AS detailsImage " +
@@ -132,7 +129,7 @@ interface RecipesDao {
             "INNER JOIN recipes ON recipes.id = recipe_ingredients.recipe_id " +
             "INNER JOIN ingredients ON ingredients.id = recipe_ingredients.ingredient_id " +
             "WHERE recipe_ingredients.recipe_id = :recipeId")
-    suspend fun getIngredientsData(recipeId: Int): List<IngredientModelFull>
+    suspend fun getIngredientsData(recipeId: Int): List<IngredientFullModel>
 
     @Query("SELECT " +
             "id, name " +
@@ -142,12 +139,6 @@ interface RecipesDao {
             "ORDER BY name")
     fun getOwnRecipesIdName(query: String): Flow<List<RecipeIdNameModel>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOwnRecipe(recipe: RecipeEntity)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRecipeIngredients(recipeIngredients: List<RecipeIngredientsEntity>)
-
     @Transaction
     suspend fun addNewRecipe(
         recipe: RecipeEntity,
@@ -156,6 +147,12 @@ interface RecipesDao {
         insertOwnRecipe(recipe)
         insertRecipeIngredients(recipeIngredients)
     }
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOwnRecipe(recipe: RecipeEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRecipeIngredients(recipeIngredients: List<RecipeIngredientsEntity>)
 
     @Transaction
     suspend fun deleteOwnRecipe(recipeId: Int) {

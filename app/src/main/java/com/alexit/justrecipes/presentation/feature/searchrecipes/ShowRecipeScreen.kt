@@ -34,13 +34,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.alexit.justrecipes.R
 import com.alexit.justrecipes.common.NotifyState
-import com.alexit.justrecipes.domain.model.database.RecipeModelFull
+import com.alexit.justrecipes.domain.model.database.RecipeFullModel
 import com.alexit.justrecipes.presentation.components.CircleLoader
 import com.alexit.justrecipes.presentation.components.CustomDivider
 import com.alexit.justrecipes.presentation.components.CustomPopup
-import com.alexit.justrecipes.presentation.components.NotifySideEffect
+import com.alexit.justrecipes.common.NotifySideEffect
 import com.alexit.justrecipes.presentation.components.TitlePanel
-import com.alexit.justrecipes.presentation.components.dpToPx
+import com.alexit.justrecipes.utility.dpToPx
 import com.alexit.justrecipes.presentation.feature.searchrecipes.viewmodel.ShowRecipeViewModel
 import com.alexit.justrecipes.presentation.theme.JustRecipesTheme
 import kotlinx.coroutines.flow.collectLatest
@@ -102,7 +102,8 @@ fun ShowRecipeScreen(
         )
         if (recipeNullable == null) LoadingScreen()
         else {
-            val recipe: RecipeModelFull = recipeNullable!!
+            val recipe: RecipeFullModel = recipeNullable!!
+            //-----Name-----
             BasicText(
                 modifier = Modifier
                     .align(alignment = Alignment.CenterHorizontally),
@@ -172,7 +173,6 @@ fun ShowRecipeScreen(
                     Divider()
                 }
 
-                //-----Portion-----
                 if (recipe.portion != null) {
                     Row(
                         modifier = Modifier

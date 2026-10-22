@@ -49,7 +49,10 @@ data class CustomDimension(
     val heightSelectorDish: Dp,
     val widthSelectorDish: Dp,
     val heightButtonTitlePanel: Dp,
-    val widthNameOwnRecipe: Dp
+    val widthInputDigit: Dp,
+    val heightInputDigit: Dp,
+    val widthDivider: Dp,
+    val heightLazyColumn: Dp
 )
 
 val themeDimension = CustomDimension(
@@ -95,7 +98,10 @@ val themeDimension = CustomDimension(
     heightSelectorDish = 48.dp,
     widthSelectorDish = 330.dp,
     heightButtonTitlePanel = 34.dp,
-    widthNameOwnRecipe = 330.dp
+    widthInputDigit = 40.dp,
+    heightInputDigit = 30.dp,
+    widthDivider = 310.dp,
+    heightLazyColumn = 550.dp
 )
 
 val LocalCustomDimension = staticCompositionLocalOf {

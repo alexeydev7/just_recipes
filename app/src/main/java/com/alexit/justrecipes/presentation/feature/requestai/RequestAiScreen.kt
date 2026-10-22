@@ -35,12 +35,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alexit.justrecipes.R
 import com.alexit.justrecipes.common.NotifyState
 import com.alexit.justrecipes.common.SourceState
-import com.alexit.justrecipes.domain.model.database.IngredientInputedModel
+import com.alexit.justrecipes.domain.model.database.IngredientInputtedModel
 import com.alexit.justrecipes.presentation.components.CircleLoader
 import com.alexit.justrecipes.presentation.components.CustomDivider
 import com.alexit.justrecipes.presentation.components.CustomPopup
 import com.alexit.justrecipes.presentation.components.TitlePanel
-import com.alexit.justrecipes.presentation.components.dpToPx
+import com.alexit.justrecipes.utility.dpToPx
 import com.alexit.justrecipes.presentation.feature.requestai.viewmodel.RequestAiViewModel
 import com.alexit.justrecipes.presentation.theme.JustRecipesTheme
 import kotlinx.collections.immutable.PersistentList
@@ -170,7 +170,7 @@ private fun LoadingScreen() {
 private fun ShowIngredients (
     unitMl: String, unitPiece: String, unitG: String,
     liquidFood: Array<String>, pieceFood: Array<String>,
-    inputtedIngredients: PersistentList<IngredientInputedModel>
+    inputtedIngredients: PersistentList<IngredientInputtedModel>
 ) {
     val colorText = JustRecipesTheme.colors.text4
     val styleText = JustRecipesTheme.typography.text1

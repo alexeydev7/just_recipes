@@ -1,8 +1,8 @@
 package com.alexit.justrecipes.domain.model.database
 
-data class IngredientInputedModel(
+data class IngredientShortModel(
     val id: Int,
     val name: String,
-    val category: String,
-    val weight: Int? = null
+    val synonym: String?,
+    val isInputted: Boolean
 )

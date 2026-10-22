@@ -9,7 +9,7 @@ import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.Dp
 import com.alexit.justrecipes.presentation.components.CustomButton
 import com.alexit.justrecipes.presentation.components.CustomButtonSelected
-import com.alexit.justrecipes.presentation.components.dpToPx
+import com.alexit.justrecipes.utility.dpToPx
 import com.alexit.justrecipes.presentation.theme.JustRecipesTheme
 
 @Composable

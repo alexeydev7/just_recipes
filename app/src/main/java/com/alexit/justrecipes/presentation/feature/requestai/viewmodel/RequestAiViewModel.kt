@@ -3,7 +3,7 @@ package com.alexit.justrecipes.presentation.feature.requestai.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alexit.justrecipes.common.SourceState
-import com.alexit.justrecipes.domain.model.database.IngredientInputedModel
+import com.alexit.justrecipes.domain.model.database.IngredientInputtedModel
 import com.alexit.justrecipes.domain.usecase.GetInputtedIngredientsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +22,7 @@ class RequestAiViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(RequestAiUiState())
     val uiState: StateFlow<RequestAiUiState> = _uiState.asStateFlow()
 
-    val inputtedIngredientsState: StateFlow<SourceState<List<IngredientInputedModel>>> by lazy {
+    val inputtedIngredientsState: StateFlow<SourceState<List<IngredientInputtedModel>>> by lazy {
         getInputtedIngredientsUseCase().stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
@@ -33,7 +33,7 @@ class RequestAiViewModel @Inject constructor(
     fun makeListIngredients(
         unitMl: String, unitPiece: String, unitG: String,
         liquidFood: Array<String>, pieceFood: Array<String>,
-        inputtedIngredients: List<IngredientInputedModel>
+        inputtedIngredients: List<IngredientInputtedModel>
     ) {
         var listIngredients = ""
         inputtedIngredients.forEach { ingredient ->

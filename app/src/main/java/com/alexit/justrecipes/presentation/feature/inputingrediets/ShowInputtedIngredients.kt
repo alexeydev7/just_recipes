@@ -47,14 +47,14 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import com.alexit.justrecipes.R
-import com.alexit.justrecipes.domain.model.database.IngredientInputedModel
+import com.alexit.justrecipes.domain.model.database.IngredientInputtedModel
 import com.alexit.justrecipes.presentation.theme.JustRecipesTheme
 import kotlinx.collections.immutable.PersistentList
 
 @Composable
 fun ShowInputtedIngredients(
-    inputtedIngredients: PersistentList<IngredientInputedModel>,
-    onDeleteClick: (IngredientInputedModel) -> Unit,
+    inputtedIngredients: PersistentList<IngredientInputtedModel>,
+    onDeleteClick: (IngredientInputtedModel) -> Unit,
     onWeightClick: (Int, Int, String) -> Unit
 ) {
     val iconDeleteIngredient = R.drawable.round_do_not_disturb_on_24
@@ -72,7 +72,6 @@ fun ShowInputtedIngredients(
     val width = JustRecipesTheme.dimensions.widthInputTextField
     val bottomMenuHeight = JustRecipesTheme.dimensions.heightBottomMenu
     val widthInputtedIngredientField = JustRecipesTheme.dimensions.widthShowedTextField
-    val widthInputtedIngredientText = JustRecipesTheme.dimensions.widthShowedText
     val widthInputtedIngredientWeight = JustRecipesTheme.dimensions.widthInputtedIngredientWeight
     val heightInputtedIngredientWeight = JustRecipesTheme.dimensions.heightInputtedIngredientWeight
     val sizeIcon = JustRecipesTheme.dimensions.sizeIcon1
@@ -168,7 +167,6 @@ fun ShowInputtedIngredients(
                             BasicText(
                                 modifier = Modifier
                                     .weight(1f),
-                                    //.width(widthInputtedIngredientText),
                                 style = textStyleInputtedIngredient,
                                 color = { colorInputtedIngredientText },
                                 text = ingredient.name
@@ -187,7 +185,7 @@ fun ShowInputtedIngredients(
                                         .padding(end = contentPadding),
                                     contentAlignment = Alignment.CenterEnd,
 
-                                ) {
+                                    ) {
                                     innerTextField()
                                 }
                                 BasicText(

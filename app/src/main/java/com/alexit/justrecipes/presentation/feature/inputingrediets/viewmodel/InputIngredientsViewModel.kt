@@ -9,8 +9,8 @@ import com.alexit.justrecipes.R
 import com.alexit.justrecipes.common.NotifyState
 import com.alexit.justrecipes.common.SourceState
 import com.alexit.justrecipes.common.StringResourceHolder
-import com.alexit.justrecipes.domain.model.database.IngredientInputedModel
-import com.alexit.justrecipes.domain.model.database.IngredientModelShort
+import com.alexit.justrecipes.domain.model.database.IngredientInputtedModel
+import com.alexit.justrecipes.domain.model.database.IngredientShortModel
 import com.alexit.justrecipes.domain.usecase.AddInputtedIngredientUseCase
 import com.alexit.justrecipes.domain.usecase.AddNewIngredientUseCase
 import com.alexit.justrecipes.domain.usecase.ChangeWeightIngredientUseCase
@@ -19,7 +19,7 @@ import com.alexit.justrecipes.domain.usecase.GetIngredientUseCase
 import com.alexit.justrecipes.domain.usecase.GetIngredientsNameUseCase
 import com.alexit.justrecipes.domain.usecase.GetInputtedIngredientsUseCase
 import com.alexit.justrecipes.domain.usecase.RemoveInputtedIngredientUseCase
-import com.alexit.justrecipes.presentation.components.NotifySideEffect
+import com.alexit.justrecipes.common.NotifySideEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -51,7 +51,7 @@ class InputIngredientsViewModel @Inject constructor(
     private val _sideEffect = Channel<NotifySideEffect>()
     val sideEffect: Flow<NotifySideEffect> = _sideEffect.receiveAsFlow()
 
-    val inputtedIngredientsState: StateFlow<SourceState<List<IngredientInputedModel>>> by lazy {
+    val inputtedIngredientsState: StateFlow<SourceState<List<IngredientInputtedModel>>> by lazy {
         getInputtedIngredientsUseCase().stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
@@ -84,9 +84,14 @@ class InputIngredientsViewModel @Inject constructor(
         }
     }
 
+
+    private fun selectSuggestionIngredient(suggestion: String) {
+        inputTextStateIngredient.setTextAndPlaceCursorAtEnd(suggestion)
+    }
+
     private fun checkingSelectedIngredient(ingredientName: String) {
         viewModelScope.launch {
-            val addingIngredient: IngredientModelShort? = getIngredientUseCase(ingredientName)
+            val addingIngredient: IngredientShortModel? = getIngredientUseCase(ingredientName)
             if (
                 addingIngredient != null &&
                 !addingIngredient.isInputted
@@ -182,10 +187,6 @@ class InputIngredientsViewModel @Inject constructor(
         }
     }
 
-    private fun selectSuggestionIngredient(suggestion: String) {
-        inputTextStateIngredient.setTextAndPlaceCursorAtEnd(suggestion)
-    }
-
     private fun dismissNewIngredient() {
         _uiState.update { currentState ->
             currentState.copy(
@@ -195,7 +196,7 @@ class InputIngredientsViewModel @Inject constructor(
         }
     }
 
-    private fun isRemoveIngredient(ingredient: IngredientInputedModel) {
+    private fun isRemoveIngredient(ingredient: IngredientInputtedModel) {
         _uiState.update { currentState ->
             currentState.copy(
                 isDeleteIngredient = true,
@@ -251,7 +252,11 @@ class InputIngredientsViewModel @Inject constructor(
         }
     }
 
-    private fun changeWeightIngredient(ingredientId: Int, ingredientWeight: Int, ingredientName: String) {
+    private fun changeWeightIngredient(
+        ingredientId: Int,
+        ingredientWeight: Int,
+        ingredientName: String
+    ) {
         viewModelScope.launch {
             try {
                 changeWeightIngredientUseCase(ingredientId, ingredientWeight)

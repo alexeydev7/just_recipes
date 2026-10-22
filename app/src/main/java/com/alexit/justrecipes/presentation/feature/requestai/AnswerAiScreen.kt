@@ -33,9 +33,9 @@ import com.alexit.justrecipes.domain.model.ai.ResponseAi
 import com.alexit.justrecipes.presentation.components.CircleLoader
 import com.alexit.justrecipes.presentation.components.CustomDivider
 import com.alexit.justrecipes.presentation.components.CustomPopup
-import com.alexit.justrecipes.presentation.components.NotifySideEffect
+import com.alexit.justrecipes.common.NotifySideEffect
 import com.alexit.justrecipes.presentation.components.TitlePanel
-import com.alexit.justrecipes.presentation.components.dpToPx
+import com.alexit.justrecipes.utility.dpToPx
 import com.alexit.justrecipes.presentation.feature.requestai.viewmodel.AnswerAiViewModel
 import com.alexit.justrecipes.presentation.theme.JustRecipesTheme
 import kotlinx.coroutines.flow.collectLatest

@@ -37,7 +37,7 @@ import androidx.compose.ui.res.vectorResource
 import com.alexit.justrecipes.R
 import com.alexit.justrecipes.domain.model.database.RecipeCardModel
 import com.alexit.justrecipes.presentation.components.CustomDivider
-import com.alexit.justrecipes.presentation.components.dpToPx
+import com.alexit.justrecipes.utility.dpToPx
 import com.alexit.justrecipes.presentation.theme.JustRecipesTheme
 
 @Composable

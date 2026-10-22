@@ -30,7 +30,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alexit.justrecipes.common.SuggestionsState
 import com.alexit.justrecipes.common.customDebounce
 import com.alexit.justrecipes.presentation.components.CustomDivider
-import com.alexit.justrecipes.presentation.components.dpToPx
+import com.alexit.justrecipes.utility.dpToPx
 import com.alexit.justrecipes.presentation.theme.JustRecipesTheme
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.coroutines.Dispatchers

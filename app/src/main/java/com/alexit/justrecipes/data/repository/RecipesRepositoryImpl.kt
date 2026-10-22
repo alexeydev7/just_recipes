@@ -10,10 +10,10 @@ import com.alexit.justrecipes.data.local.room.entity.IngredientEntity
 import com.alexit.justrecipes.data.local.room.entity.RecipeEntity
 import com.alexit.justrecipes.data.local.room.entity.RecipeIngredientsEntity
 import com.alexit.justrecipes.domain.model.database.IngredientIdNameModel
-import com.alexit.justrecipes.domain.model.database.IngredientInputedModel
-import com.alexit.justrecipes.domain.model.database.IngredientModelEnergy
-import com.alexit.justrecipes.domain.model.database.IngredientModelFull
-import com.alexit.justrecipes.domain.model.database.IngredientModelShort
+import com.alexit.justrecipes.domain.model.database.IngredientInputtedModel
+import com.alexit.justrecipes.domain.model.database.IngredientEnergyModel
+import com.alexit.justrecipes.domain.model.database.IngredientFullModel
+import com.alexit.justrecipes.domain.model.database.IngredientShortModel
 import com.alexit.justrecipes.domain.model.database.RecipeCardModel
 import com.alexit.justrecipes.domain.model.database.RecipeDataModel
 import com.alexit.justrecipes.domain.model.database.RecipeIdNameModel
@@ -27,7 +27,7 @@ class RecipesRepositoryImpl @Inject constructor(
     private val recipesDao: RecipesDao
 ) : RecipesRepository {
 
-    override suspend fun getIngredient(ingredientName: String): IngredientModelShort? {
+    override suspend fun getIngredient(ingredientName: String): IngredientShortModel? {
         return recipesDao.getIngredient(ingredientName)
     }
 
@@ -35,17 +35,13 @@ class RecipesRepositoryImpl @Inject constructor(
         return recipesDao.getIngredientsName().asSourceState()
     }
 
-    override fun getInputtedIngredients(): Flow<SourceState<List<IngredientInputedModel>>> {
+    override fun getInputtedIngredients(): Flow<SourceState<List<IngredientInputtedModel>>> {
         return recipesDao.getInputtedIngredients().asSourceState()
     }
 
     override suspend fun getCategories(): List<String> {
         return recipesDao.getCategories()
     }
-
-    //override suspend fun checkExistIngredient(ingredientName: String): Boolean {
-    //    return recipesDao.checkExistIngredient(ingredientName)
-    //}
 
     override suspend fun getIngredientIdName(): List<IngredientIdNameModel> {
         return recipesDao.getIngredientIdName()
@@ -104,7 +100,7 @@ class RecipesRepositoryImpl @Inject constructor(
         ).flow
     }
 
-    override suspend fun getIngredientsEnergy(recipeId: Int): List<IngredientModelEnergy> {
+    override suspend fun getIngredientsEnergy(recipeId: Int): List<IngredientEnergyModel> {
         return recipesDao.getIngredientsEnergy(recipeId)
     }
 
@@ -112,7 +108,7 @@ class RecipesRepositoryImpl @Inject constructor(
         return recipesDao.getRecipeData(recipeId)
     }
 
-    override suspend fun getIngredientsData(recipeId: Int): List<IngredientModelFull> {
+    override suspend fun getIngredientsData(recipeId: Int): List<IngredientFullModel> {
         return recipesDao.getIngredientsData(recipeId)
     }
 
