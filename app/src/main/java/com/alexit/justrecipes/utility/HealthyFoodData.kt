@@ -12,7 +12,6 @@ fun getHealthyFoodData(ingredients: List<IngredientEnergyModel>): HealthyFoodMod
             protein = acc.protein + (entity.protein * amount),
             fat = acc.fat + (entity.fat * amount),
             carbohydrate = acc.carbohydrate + (entity.carbohydrate * amount),
-
             )
     }
     return ingredientTotal

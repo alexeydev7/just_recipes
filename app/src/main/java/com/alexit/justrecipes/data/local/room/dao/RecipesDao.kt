@@ -13,6 +13,7 @@ import com.alexit.justrecipes.domain.model.database.IngredientIdNameModel
 import com.alexit.justrecipes.domain.model.database.IngredientInputtedModel
 import com.alexit.justrecipes.domain.model.database.IngredientEnergyModel
 import com.alexit.justrecipes.domain.model.database.IngredientFullModel
+import com.alexit.justrecipes.domain.model.database.IngredientOwnRecipeModel
 import com.alexit.justrecipes.domain.model.database.IngredientShortModel
 import com.alexit.justrecipes.domain.model.database.RecipeCardModel
 import com.alexit.justrecipes.domain.model.database.RecipeDataModel
@@ -165,4 +166,9 @@ interface RecipesDao {
 
     @Query("DELETE FROM recipes WHERE id = :recipeId")
     suspend fun deleteRecipe(recipeId: Int)
+
+    @Query("SELECT id, name, energy, protein, fat, carbohydrate, category, weight " +
+            "FROM ingredients WHERE is_inputted = 1 " +
+            "ORDER BY name")
+    fun getIngredientsOwnRecipe(): Flow<List<IngredientOwnRecipeModel>>
 }

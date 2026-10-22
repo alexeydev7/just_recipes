@@ -9,6 +9,7 @@ import com.alexit.justrecipes.domain.model.database.IngredientIdNameModel
 import com.alexit.justrecipes.domain.model.database.IngredientInputtedModel
 import com.alexit.justrecipes.domain.model.database.IngredientEnergyModel
 import com.alexit.justrecipes.domain.model.database.IngredientFullModel
+import com.alexit.justrecipes.domain.model.database.IngredientOwnRecipeModel
 import com.alexit.justrecipes.domain.model.database.IngredientShortModel
 import com.alexit.justrecipes.domain.model.database.RecipeCardModel
 import com.alexit.justrecipes.domain.model.database.RecipeDataModel
@@ -38,4 +39,5 @@ interface RecipesRepository {
     fun getOwnRecipesIdName(query: String): Flow<SourceState<List<RecipeIdNameModel>>>
     suspend fun addNewRecipe(recipe: RecipeEntity, recipeIngredients: List<RecipeIngredientsEntity>)
     suspend fun deleteOwnRecipe(recipeId: Int)
+    fun getIngredientsOwnRecipe(): Flow<SourceState<List<IngredientOwnRecipeModel>>>
 }

@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,16 +23,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alexit.justrecipes.R
 import com.alexit.justrecipes.common.NotifySideEffect
 import com.alexit.justrecipes.common.NotifyState
 import com.alexit.justrecipes.common.SourceState
-import com.alexit.justrecipes.domain.model.database.IngredientInputtedModel
 import com.alexit.justrecipes.presentation.components.CircleLoader
 import com.alexit.justrecipes.presentation.components.CustomDivider
 import com.alexit.justrecipes.presentation.components.CustomPopup
@@ -42,10 +38,8 @@ import com.alexit.justrecipes.presentation.feature.ownrecipes.viewmodel.MakeOwnR
 import com.alexit.justrecipes.presentation.feature.ownrecipes.viewmodel.MakeOwnRecipeViewModel
 import com.alexit.justrecipes.presentation.theme.JustRecipesTheme
 import com.alexit.justrecipes.utility.dpToPx
-import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.collectLatest
-import kotlin.collections.contains
 
 @Composable
 fun MakeOwnRecipeScreen(
@@ -53,8 +47,8 @@ fun MakeOwnRecipeScreen(
     onBackClick: () -> Unit
 ) {
     val makeOwnRecipeUiState by makeOwnRecipeViewModel.uiState.collectAsStateWithLifecycle()
-    val ingredientsInputted =
-        makeOwnRecipeViewModel.ingredientsInputtedState.collectAsStateWithLifecycle()
+    val ingredientsOwnRecipeState =
+        makeOwnRecipeViewModel.ingredientsOwnRecipeState.collectAsStateWithLifecycle()
 
     val scrollState = rememberScrollState()
 
@@ -175,7 +169,7 @@ fun MakeOwnRecipeScreen(
                     style = styleStrIngredients,
                     color = { colorStrIngredients },
                 )
-                when (val stateSource = ingredientsInputted.value) {
+                when (val stateSource = ingredientsOwnRecipeState.value) {
                     is SourceState.Loading -> LoadingScreen()
                     is SourceState.Success -> ShowIngredientsOwnRecipe(
                         ingredients = stateSource.data.toPersistentList()
@@ -224,44 +218,5 @@ private fun LoadingScreen() {
             modifier = Modifier.size(JustRecipesTheme.dimensions.sizeCircleLoader),
             isVisible = isLoading
         )
-    }
-}
-
-@Composable
-private fun ShowIngredientsOwnRecipe(ingredients: PersistentList<IngredientInputtedModel>) {
-    val widthIngredientName = JustRecipesTheme.dimensions.widthIngredientNameInRecipe
-    val styleText = JustRecipesTheme.typography.text1
-    val colorText = JustRecipesTheme.colors.text4
-    val liquid = stringArrayResource(R.array.liquid_foodstuff)
-    val piece = stringArrayResource(R.array.piece_foodstuff)
-
-    ingredients.forEach { ingredient ->
-        val unit: String = if (liquid.contains(ingredient.category)) {
-            stringResource(R.string.ml)
-        } else if (piece.contains(ingredient.category)) {
-            stringResource(R.string.piece)
-        } else {
-            stringResource(R.string.g)
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            BasicText(
-                modifier = Modifier
-                    .width(widthIngredientName),
-                text = ingredient.name.replaceFirstChar { it.uppercase() },
-                style = styleText.copy(textAlign = TextAlign.Left),
-                color = { colorText },
-            )
-            if (ingredient.weight != null) {
-                BasicText(
-                    text = "${ingredient.weight} $unit",
-                    style = styleText.copy(textAlign = TextAlign.Right),
-                    color = { colorText }
-                )
-            }
-        }
     }
 }

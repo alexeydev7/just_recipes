@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alexit.justrecipes.common.NotifySideEffect
 import com.alexit.justrecipes.common.SourceState
-import com.alexit.justrecipes.domain.model.database.IngredientInputtedModel
-import com.alexit.justrecipes.domain.usecase.GetInputtedIngredientsUseCase
+import com.alexit.justrecipes.domain.model.database.IngredientOwnRecipeModel
+import com.alexit.justrecipes.domain.usecase.GetIngredientsOwnRecipeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -21,13 +21,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MakeOwnRecipeViewModel @Inject constructor(
-    private val getInputtedIngredientsUseCase: GetInputtedIngredientsUseCase
+    private val getIngredientsOwnRecipeUseCase: GetIngredientsOwnRecipeUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MakeOwnRecipeUiState())
     val uiState: StateFlow<MakeOwnRecipeUiState> = _uiState.asStateFlow()
 
-    val ingredientsInputtedState: StateFlow<SourceState<List<IngredientInputtedModel>>> by lazy {
-        getInputtedIngredientsUseCase().stateIn(
+    val ingredientsOwnRecipeState: StateFlow<SourceState<List<IngredientOwnRecipeModel>>> by lazy {
+        getIngredientsOwnRecipeUseCase().stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
             initialValue = SourceState.Loading
@@ -40,7 +40,6 @@ class MakeOwnRecipeViewModel @Inject constructor(
     val inputNameRecipeState = TextFieldState()
     val inputPortionState = TextFieldState()
     val inputDurationState = TextFieldState()
-    val inputIngredientState = TextFieldState()
 
     fun handleIntent(intent: MakeOwnRecipeIntent) {
         when (intent) {

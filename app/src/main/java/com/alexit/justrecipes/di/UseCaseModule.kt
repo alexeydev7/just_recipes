@@ -10,6 +10,7 @@ import com.alexit.justrecipes.domain.usecase.DeleteOwnRecipeUseCase
 import com.alexit.justrecipes.domain.usecase.GetCategoriesUseCase
 import com.alexit.justrecipes.domain.usecase.GetIngredientUseCase
 import com.alexit.justrecipes.domain.usecase.GetIngredientsNameUseCase
+import com.alexit.justrecipes.domain.usecase.GetIngredientsOwnRecipeUseCase
 import com.alexit.justrecipes.domain.usecase.GetInputtedIngredientsUseCase
 import com.alexit.justrecipes.domain.usecase.GetMAXIdIngredientsUseCase
 import com.alexit.justrecipes.domain.usecase.GetOwnRecipesIdNameUseCase
@@ -115,5 +116,11 @@ object UseCaseModule {
     @Singleton
     fun provideDeleteOwnRecipeUseCase(recipesRepository: RecipesRepository): DeleteOwnRecipeUseCase {
         return DeleteOwnRecipeUseCase(recipesRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetIngredientsOwnRecipeUseCase(recipesRepository: RecipesRepository): GetIngredientsOwnRecipeUseCase {
+        return GetIngredientsOwnRecipeUseCase(recipesRepository)
     }
 }

@@ -13,6 +13,7 @@ import com.alexit.justrecipes.domain.model.database.IngredientIdNameModel
 import com.alexit.justrecipes.domain.model.database.IngredientInputtedModel
 import com.alexit.justrecipes.domain.model.database.IngredientEnergyModel
 import com.alexit.justrecipes.domain.model.database.IngredientFullModel
+import com.alexit.justrecipes.domain.model.database.IngredientOwnRecipeModel
 import com.alexit.justrecipes.domain.model.database.IngredientShortModel
 import com.alexit.justrecipes.domain.model.database.RecipeCardModel
 import com.alexit.justrecipes.domain.model.database.RecipeDataModel
@@ -126,5 +127,9 @@ class RecipesRepositoryImpl @Inject constructor(
 
     override suspend fun deleteOwnRecipe(recipeId: Int) {
         recipesDao.deleteOwnRecipe(recipeId)
+    }
+
+    override fun getIngredientsOwnRecipe(): Flow<SourceState<List<IngredientOwnRecipeModel>>> {
+        return recipesDao.getIngredientsOwnRecipe().asSourceState()
     }
 }
