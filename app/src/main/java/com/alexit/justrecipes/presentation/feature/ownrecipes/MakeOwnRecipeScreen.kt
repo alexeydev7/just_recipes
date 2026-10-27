@@ -139,7 +139,9 @@ fun MakeOwnRecipeScreen(
                     state = makeOwnRecipeViewModel.inputPortionState,
                     text = stringResource(R.string.portion),
                     onDoneClick = { portion ->
-                        MakeOwnRecipeIntent.GetPortion(portion)
+                        makeOwnRecipeViewModel.handleIntent(
+                            MakeOwnRecipeIntent.GetPortion(portion)
+                        )
                     },
                     placeholder = portion,
                     unit = stringResource(R.string.person)
@@ -150,7 +152,9 @@ fun MakeOwnRecipeScreen(
                     state = makeOwnRecipeViewModel.inputDurationState,
                     text = stringResource(R.string.duration),
                     onDoneClick = { duration ->
-                        MakeOwnRecipeIntent.GetDuration(duration)
+                        makeOwnRecipeViewModel.handleIntent(
+                            MakeOwnRecipeIntent.GetDuration(duration)
+                        )
                     },
                     placeholder = duration,
                     unit = stringResource(R.string.minute)
@@ -160,8 +164,7 @@ fun MakeOwnRecipeScreen(
             Column(
                 modifier = Modifier
                     .padding(top = contentPadding, bottom = contentPadding)
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.Start
+                    .fillMaxWidth()
             ) {
                 val ingredientsStr = stringResource(R.string.ingredients)
                 BasicText(
@@ -172,9 +175,9 @@ fun MakeOwnRecipeScreen(
                 when (val stateSource = ingredientsOwnRecipeState.value) {
                     is SourceState.Loading -> LoadingScreen()
                     is SourceState.Success -> ShowIngredientsOwnRecipe(
-                        ingredients = stateSource.data.toPersistentList()
+                        ingredients = stateSource.data.toPersistentList(),
+                        portion = portion,
                     )
-
                     is SourceState.Error -> {
                         isNewNotify = true
                         notifyMessage = if (stateSource.message != null) {

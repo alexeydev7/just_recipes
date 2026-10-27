@@ -61,12 +61,14 @@ class MakeOwnRecipeViewModel @Inject constructor(
         _uiState.value = _uiState.value.copy(
             portion = portion
         )
+        inputPortionState.clearText()
     }
 
     private fun getDuration(duration: Int) {
         _uiState.value = _uiState.value.copy(
             duration = duration
         )
+        inputDurationState.clearText()
     }
 
     private fun saveOwnRecipe() {}
