@@ -76,6 +76,7 @@ fun NameTextField (
             if (state.text.isNotEmpty()) {
                 onDoneClick(state.text.toString().trim())
                 keyboardController?.hide()
+                isFocused = false
             }
         },
         lineLimits = TextFieldLineLimits.MultiLine(),
@@ -87,14 +88,19 @@ fun NameTextField (
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Box(
-                    modifier = Modifier
-                        .padding(end = contentPadding)
-                        .weight(1f),
-                ) {
-                    innerTextField()
-                }
-                if (state.text.isNotEmpty()) {
+
+                if (
+                    isFocused
+                    ||
+                    state.text.isNotEmpty()
+                    ) {
+                    Box(
+                        modifier = Modifier
+                            .padding(end = contentPadding)
+                            .weight(1f),
+                    ) {
+                        innerTextField()
+                    }
                     Image(
                         modifier = Modifier
                             .clip(RoundedCornerShape(sizeIcon))
@@ -109,7 +115,10 @@ fun NameTextField (
                     )
                 }
             }
-            if (state.text.isEmpty()) {
+            if (
+                state.text.isEmpty()
+                &&
+                !isFocused) {
                 Row(
                     modifier = Modifier
                         .padding(contentPadding)
@@ -130,7 +139,11 @@ fun NameTextField (
                             .size(sizeIcon)
                             .clickable(
                                 enabled = true,
-                                onClick = { state.setTextAndPlaceCursorAtEnd(placeholder) }
+                                onClick = {
+                                    state.setTextAndPlaceCursorAtEnd(placeholder)
+                                    isFocused = true
+                                    keyboardController?.show()
+                                }
                             ),
                         imageVector = ImageVector.vectorResource(id = iconPlaceholder),
                         contentDescription = stringResource(id = iconDescriptionPlaceholder),
